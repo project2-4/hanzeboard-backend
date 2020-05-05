@@ -19,8 +19,30 @@ php artisan db:seed
 php artisan jwt:secret
 ```
 
-## Setting up IDE helper (PhpStorm)
-* Laravel IDE helper
+## Setting up IDE helper
+* Laravel IDE helper (PhpStorm)
     * [docs](https://github.com/barryvdh/laravel-ide-helper)
-    * Automatic phpDoc generation for Laravel Facades
         * `php artisan ide-helper:generate`
+        * `php artisan ide-helper:meta`
+
+## Websockets
+For handeling websockets the Laravel Websockets package is used [https://github.com/beyondcode/laravel-websockets](https://github.com/beyondcode/laravel-websockets). 
+This package is a drop-in Pusher replacement by making their api a completely match with Pusher's. 
+As a result Laravels build-in Pusher drivers can be used even though we are running a local socket server.
+
+### Configuration
+Even though we do not really use Pusher, all the `PUSHER_` environment variables well need to be defined because [https://github.com/beyondcode/laravel-websockets](Laravel Websockets) will uses these variables.
+
+The [https://github.com/beyondcode/laravel-websockets](Laravel Websockets) documentation states the following about the required value for these variables:<br>
+_It does not matter what you set as your `PUSHER_` variables. Just make sure they are unique for each project._
+
+### Generating keys
+The value of the keys does not matter so we could just generate a random string:
+```bash
+php artisan tinker 
+```
+
+```
+# Psy Shell v0.10.4 (PHP 7.4.0 — cli) by Justin Hileman
+>>> Str::random(64)
+```
