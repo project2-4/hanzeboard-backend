@@ -9,7 +9,9 @@ class CoursesController extends Controller
      */
     public function get()
     {
-        return response()->json(['get']);
+        return response()->json([
+            ['foo', 'bar', 'buz']
+        ]);
     }
 
     /**
@@ -17,6 +19,12 @@ class CoursesController extends Controller
      */
     public function test()
     {
-        return response()->json(['test']);
+        return response()->json([
+            [
+                'course 1',
+                'course 2',
+                'course 3'
+            ]
+        ]);
     }
 }

@@ -34,7 +34,7 @@ Route::group([
     Route::get('test', 'CoursesController@test');
 
     Route::group([
-        'middleware' => 'auth:api'
+        'middleware' => ['auth:api', 'jwt.refresh']
     ], function () {
         Route::get('courses', 'CoursesController@get');
     });
