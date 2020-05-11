@@ -17,5 +17,11 @@ class UserSeeder extends Seeder
             'email' => 'dylan@hanzeboard.nl',
             'password' => bcrypt('hanzeboard')
         ]);
+
+        User::create([
+            'name' => 'Jordi Mellema',
+            'email' => 'jordi@hanzeboard.nl',
+            'password' => bcrypt('ditiseenwachtwoord')
+        ]);
     }
 }
