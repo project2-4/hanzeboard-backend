@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Student extends Model
 {
@@ -21,5 +22,13 @@ class Student extends Model
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function user(): MorphOne
+    {
+        return $this->morphOne(User::class, 'profile');
     }
 }

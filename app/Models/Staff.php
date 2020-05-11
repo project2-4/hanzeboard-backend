@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Staff extends Model
 {
@@ -20,5 +21,13 @@ class Staff extends Model
     public function grades(): HasMany
     {
         return $this->hasMany(Grade::class, 'recorded_by');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function user(): MorphOne
+    {
+        return $this->morphOne(User::class, 'profile');
     }
 }
