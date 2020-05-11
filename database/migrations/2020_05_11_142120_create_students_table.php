@@ -16,8 +16,8 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id('id');
 
-            $table->foreignId('class_id')
-                ->constrained('classes')
+            $table->foreignId('group_id')
+                ->constrained('groups')
                 ->onDelete('restrict');
 
             $table->timestamps();
