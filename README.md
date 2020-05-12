@@ -20,7 +20,7 @@ php artisan jwt:secret
 ```
 
 ## Database
-[![dbdiagram](https://github.com/project2-4/hanzeboard-backend/blob/database/.docs/dbdiagram.png?raw=true)
+![dbdiagram](https://github.com/project2-4/hanzeboard-backend/blob/database/.docs/dbdiagram.png?raw=true)
 
 ## Websockets
 For handeling websockets the Laravel Websockets package is used [https://github.com/beyondcode/laravel-websockets](https://github.com/beyondcode/laravel-websockets). 
