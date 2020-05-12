@@ -13,6 +13,7 @@ class AssignmentsSeeder extends Seeder
     {
         App\Models\Subject::all()->each(function ($subject) {
             $subject->assignments()->save(factory(App\Models\Assignment::class)->make([
+                'subject_id' => $subject->id,
                 'name' => $subject->name
             ]));
         });

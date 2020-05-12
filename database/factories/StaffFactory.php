@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Staff::class, function (Faker $faker) {
     return [
-        'abbreviation' => Str::random(4),
+        'abbreviation' => strtoupper(Str::random(4)),
         'status' => 'default',
         'office_location' => $faker->lexify('Zernikeplein 11 ?.###')
     ];

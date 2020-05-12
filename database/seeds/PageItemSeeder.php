@@ -13,7 +13,9 @@ class PageItemSeeder extends Seeder
     {
         App\Models\Page::all()->each(function ($page) {
             $page->items()->createMany(
-                factory(App\Models\PageItem::class, 5)->make()->toArray()
+                factory(App\Models\PageItem::class, 5)->make([
+                    'page_id' => $page->id
+                ])->toArray()
             );
         });
     }

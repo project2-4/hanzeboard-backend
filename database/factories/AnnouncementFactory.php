@@ -10,6 +10,6 @@ $factory->define(Announcement::class, function (Faker $faker) {
         'title' => $faker->sentence(6, true),
         'content' => $faker->paragraph(5, true),
         'posted_by' => factory(\App\Models\Staff::class),
-        'course_id' => factory(\App\Models\Course::class)
+        //'course_id' => factory(\App\Models\Course::class)
     ];
 });

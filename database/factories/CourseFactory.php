@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Course::class, function (Faker $faker) {
     return [
-        'name' => 'default',
+        'name' => 'Course name',
         'is_public' => true
     ];
 });
