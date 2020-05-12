@@ -19,11 +19,8 @@ php artisan db:seed
 php artisan jwt:secret
 ```
 
-## Setting up IDE helper
-* Laravel IDE helper (PhpStorm)
-    * [docs](https://github.com/barryvdh/laravel-ide-helper)
-        * `php artisan ide-helper:generate`
-        * `php artisan ide-helper:meta`
+## Database
+[![dbdiagram](https://github.com/project2-4/hanzeboard-backend/blob/database/.docs/dbdiagram.png?raw=true)
 
 ## Websockets
 For handeling websockets the Laravel Websockets package is used [https://github.com/beyondcode/laravel-websockets](https://github.com/beyondcode/laravel-websockets). 
@@ -46,3 +43,9 @@ php artisan tinker
 # Psy Shell v0.10.4 (PHP 7.4.0 — cli) by Justin Hileman
 >>> Str::random(64)
 ```
+
+## Setting up IDE helper
+* Laravel IDE helper (PhpStorm)
+    * [docs](https://github.com/barryvdh/laravel-ide-helper)
+        * `php artisan ide-helper:generate`
+        * `php artisan ide-helper:meta`
