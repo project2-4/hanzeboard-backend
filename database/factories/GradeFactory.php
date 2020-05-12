@@ -15,14 +15,8 @@ $factory->define(Grade::class, function (Faker $faker) {
             'Python'
         ]),
         'grade' => $faker->randomFloat(0.0, 10.0),
-        'assignment_id' => function () {
-            return factory(\App\Models\Assignment::class)->create()->id;
-        },
-        'student_id' => function () {
-            return factory(\App\Models\Student::class)->create()->id;
-        },
-        'recorded_by' => function () {
-            return factory(\App\Models\Staff::class)->create()->id;
-        },
+        'assignment_id' => factory(\App\Models\Assignment::class),
+        'student_id' => factory(\App\Models\Student::class),
+        'recorded_by' => factory(\App\Models\Staff::class),
     ];
 });

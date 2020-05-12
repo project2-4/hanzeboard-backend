@@ -12,24 +12,15 @@ $factory->define(User::class, function (Faker $faker) {
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => bcrypt(Str::random(10)),
+        'password' => bcrypt('secret'),
         'profile_type' => 'student',
-        'profile_id' => function () {
-            return factory(\App\Models\Student::class)->create()->id;
-        },
+        'profile_id' => factory(\App\Models\Student::class),
         'role_id' => function () {
             return \App\Models\Role::where('name', 'Student')->first()->id;
         },
         'remember_token' => Str::random(10),
     ];
 });
-
-$factory->state(App\Models\User::class, 'staff', [
-    'profile_type' => 'staff',
-    'profile_id' => function () {
-        return factory(\App\Models\Staff::class)->create()->id;
-    }
-]);
 
 $factory->state(App\Models\User::class, 'admin', [
     'role_id' => function () {

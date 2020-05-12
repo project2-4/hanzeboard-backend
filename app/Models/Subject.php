@@ -10,7 +10,7 @@ class Subject extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function grades(): HasMany
+    public function assignments(): HasMany
     {
         return $this->hasMany(Assignment::class, 'subject_id');
     }

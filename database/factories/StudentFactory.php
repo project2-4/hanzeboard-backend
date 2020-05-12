@@ -7,8 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Student::class, function (Faker $faker) {
     return [
-        'class_id' => function () {
-            return factory(\App\Models\Group::class)->create()->id;
-        }
+        'student_number' => $faker->unique()->randomNumber(6, true),
+       'group_id' => factory(\App\Models\Group::class)
     ];
 });

@@ -19,9 +19,9 @@ class CreatePagesTable extends Migration
             $table->text('content')->nullable();
 
             $table->foreignId('parent_page_id')
+                ->nullable()
                 ->constrained('pages')
-                ->onDelete('restrict')
-                ->nullable();
+                ->onDelete('restrict');
             $table->foreignId('course_id')
                 ->constrained('courses')
                 ->onDelete('restrict');

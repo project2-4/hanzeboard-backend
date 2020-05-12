@@ -17,8 +17,6 @@ $factory->define(Assignment::class, function (Faker $faker) {
         'type' => 'numeric',
         'credits' => $faker->numberBetween(0, 5),
         'deadline' => now()->addDays(2),
-        'subject_id' => function () {
-            return factory(\App\Models\Subject::class)->create()->id;
-        }
+        'subject_id' => factory(\App\Models\Subject::class)
     ];
 });
