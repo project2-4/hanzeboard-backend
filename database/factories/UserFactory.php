@@ -23,6 +23,7 @@ $factory->define(User::class, function (Faker $faker) {
 });
 
 $factory->state(App\Models\User::class, 'admin', [
+    'email' => 'admin@hanze.nl',
     'role_id' => function () {
         return \App\Models\Role::where('name', 'Admin')->first()->id;
     }
