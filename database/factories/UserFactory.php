@@ -4,25 +4,39 @@
 
 use App\Models\User;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
-
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'infix' => null,
+        'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => bcrypt('secret'),
+        'profile_type' => 'student',
+        'profile_id' => factory(\App\Models\Student::class),
+        'role_id' => function () {
+            return \App\Models\Role::where('name', 'Student')->first()->id;
+        },
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->state(App\Models\User::class, 'admin', [
+    'email' => 'admin@hanze.nl',
+    'role_id' => function () {
+        return \App\Models\Role::where('name', 'Admin')->first()->id;
+    }
+]);
+
+$factory->state(App\Models\User::class, 'teacher', [
+    'role_id' => function () {
+        return \App\Models\Role::where('name', 'Teacher')->first()->id;
+    }
+]);
+
+$factory->state(App\Models\User::class, 'teaching-fellow', [
+    'role_id' => function () {
+        return \App\Models\Role::where('name', 'Teaching fellow')->first()->id;
+    }
+]);

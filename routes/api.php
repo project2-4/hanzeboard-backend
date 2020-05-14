@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,11 +14,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 Route::group([
     'middleware' => 'api'
 ], function () {
@@ -37,5 +33,18 @@ Route::group([
         'middleware' => ['auth:api', 'jwt.refresh']
     ], function () {
         Route::get('courses', 'CoursesController@get');
+    });
+
+    /**************************     *********************/
+    /************************** API *********************/
+    /**************************     *********************/
+
+    Route::group([
+        'prefix' => 'student'
+    ], function() {
+        Route::get('{id}', 'StudentController@get');
+        Route::delete('{id}', 'StudentController@delete');
+        Route::get('{id}/edit', 'StudentController@edit');
+        Route::put('new', 'StudentController@new');
     });
 });

@@ -12,16 +12,29 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Dylan Hiemstra',
-            'email' => 'dylan@hanzeboard.nl',
-            'password' => bcrypt('hanzeboard')
+        foreach (GroupsSeeder::$groups as $group) {
+            for ($i = 0; $i < 30; $i++) {
+                factory(App\Models\User::class)->create([
+                    'profile_id' => factory(App\Models\Student::class)->create([
+                        'group_id' => \App\Models\Group::where('name', $group)->first()->id
+                    ])
+                ]);
+            }
+        }
+
+        factory(App\Models\User::class, 2)->states('teaching-fellow')->create([
+            'profile_type' => 'staff',
+            'profile_id' => factory(\App\Models\Staff::class)
         ]);
 
-        User::create([
-            'name' => 'Jordi Mellema',
-            'email' => 'jordi@hanzeboard.nl',
-            'password' => bcrypt('ditiseenwachtwoord')
+        factory(App\Models\User::class, 20)->states('teacher')->create([
+            'profile_type' => 'staff',
+            'profile_id' => factory(\App\Models\Staff::class)
+        ]);
+
+        factory(App\Models\User::class, 1)->states( 'admin')->create([
+            'profile_type' => 'staff',
+            'profile_id' => factory(\App\Models\Staff::class)
         ]);
     }
 }

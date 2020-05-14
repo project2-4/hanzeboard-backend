@@ -1,0 +1,152 @@
+Table roles {
+  id int [pk, increment] // auto-increment
+  name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table staff {
+  id int [pk, increment] // auto-increment
+  abbreviation varchar [unique]
+  status enum
+  office_location varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table students {
+  id int [pk, increment] // auto-increment
+  student_number int [unique]
+  group_id int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table user {
+  id int [pk, increment] // auto-increment
+  first_name varchar
+  infix varchar
+  last_name varchar
+  avatar_url varchar
+  email varchar [unique]
+  email_verified_at timestamp
+  password varchar
+  profile_type varchar
+  profile_id int
+  role_id int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table groups {
+  id int [pk, increment] // auto-increment
+  name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table user_has_courses {
+  user_id int [pk]
+  course_id int [pk]
+}
+
+
+Table courses {
+  id int [pk, increment] // auto-increment
+  name varchar
+  is_public boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects {
+  id int [pk, increment] // auto-increment
+  name varchar
+  course_id int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table assignments {
+  id int [pk, increment] // auto-increment
+  name varchar
+  type enum
+  credits int
+  deadline timestamp
+  subject_id int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table grades {
+  id int [pk, increment] // auto-increment
+  name varchar
+  grade decimal
+  assignment_id int
+  student_id int
+  recorded_by int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table pages {
+  id int [pk, increment] // auto-increment
+  name varchar
+  content text
+  parent_page_id int
+  course_id int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table page_items {
+  id int [pk, increment] // auto-increment
+  title varchar
+  type varchar
+  content varchar
+  page_id int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table announcements {
+  id int [pk, increment]
+  title varchar
+  content text
+  posted_by int
+  course_id it
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: "groups"."id" < "students"."group_id"
+
+Ref: "user_has_courses"."course_id" > "courses"."id"
+
+Ref: "students"."id" < "grades"."student_id"
+
+Ref: "subjects"."id" < "assignments"."subject_id"
+
+Ref: "assignments"."id" < "grades"."assignment_id"
+
+Ref: "staff"."id" < "grades"."recorded_by"
+
+Ref: "courses"."id" < "pages"."course_id"
+
+Ref: "pages"."id" < "page_items"."page_id"
+
+Ref: "staff"."id" < "announcements"."posted_by"
+
+Ref: "courses"."id" < "announcements"."course_id"
+
+Ref: "courses"."id" < "subjects"."course_id"
+
+Ref: "pages"."id" - "pages"."parent_page_id"
+
+Ref: "roles"."id" < "user"."role_id"
+
+Ref: "user"."id" < "user_has_courses"."user_id"
+
+Ref: "students"."id" - "user"."profile_id"
+
+Ref: "staff"."id" - "user"."profile_id"
