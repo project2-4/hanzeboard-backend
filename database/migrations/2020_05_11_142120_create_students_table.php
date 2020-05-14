@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id('id');
-            $table->string('student_number');
+            $table->integer('student_number');
 
             $table->foreignId('group_id')
                 ->constrained('groups')
