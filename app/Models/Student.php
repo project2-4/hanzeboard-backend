@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class Student extends Model
+/**
+ * @method static find($id)
+ */
+class Student extends User
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function grades(): HasMany
     {
@@ -17,15 +20,19 @@ class Student extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'group_id');
     }
 
+    public function getUser()
+    {
+        return $this->user();
+    }
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return MorphOne
      */
     public function user(): MorphOne
     {

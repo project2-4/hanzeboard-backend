@@ -15,6 +15,9 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * @method static where(string $string, string $string1, $email)
+ */
 class User extends Model implements
     AuthenticatableContract,
     AuthorizableContract,
