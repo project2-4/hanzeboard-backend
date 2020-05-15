@@ -22,17 +22,17 @@ class UserSeeder extends Seeder
             }
         }
 
-        factory(App\Models\User::class, 2)->states('teaching-fellow')->create([
+        factory(App\Models\User::class, 2)->state('teaching-fellow')->create([
             'profile_type' => 'staff',
             'profile_id' => factory(\App\Models\Staff::class)
         ]);
 
-        factory(App\Models\User::class, 20)->states('teacher')->create([
+        factory(App\Models\User::class, 20)->state('teacher')->create([
             'profile_type' => 'staff',
             'profile_id' => factory(\App\Models\Staff::class)
         ]);
 
-        factory(App\Models\User::class, 1)->states( 'admin')->create([
+        factory(App\Models\User::class, 1)->state( 'admin')->create([
             'profile_type' => 'staff',
             'profile_id' => factory(\App\Models\Staff::class)
         ]);
