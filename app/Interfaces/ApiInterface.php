@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
 interface ApiInterface
 {
@@ -13,14 +13,14 @@ interface ApiInterface
      */
     public function index();
 
-    /**
-     * GET
-     *
-     * @param Request $request
-     *
-     * @return mixed
-     */
-    public function create(Request $request);
+//    /**
+//     * GET
+//     *
+//     * @param $request
+//     *
+//     * @return mixed
+//     */
+//    public static function create(FormRequest $request);
 
     /**
      * GET
@@ -33,12 +33,12 @@ interface ApiInterface
     /**
      * GET
      *
-     * @param Request $request
+     * @param FormRequest $request
      * @param int $id
      *
      * @return mixed
      */
-    public function edit(Request $request, int $id);
+    public function edit(FormRequest $request, int $id);
 
     /**
      * DELETE
