@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static find(int $id)
+ */
 class Announcement extends Model
 {
     /**

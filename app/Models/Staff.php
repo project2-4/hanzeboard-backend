@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
+/**
+ * @method static find(int $id)
+ */
 class Staff extends Model
 {
     /**

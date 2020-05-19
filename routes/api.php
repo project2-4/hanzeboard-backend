@@ -27,8 +27,6 @@ Route::group([
         Route::post('me', 'AuthController@me');
     });
 
-    Route::get('test', 'CoursesController@test');
-
     Route::group([
         'middleware' => ['auth:api', 'jwt.refresh']
     ], function () {
@@ -37,14 +35,22 @@ Route::group([
 
     /**************************     *********************/
     /************************** API *********************/
-    /**************************     *********************/
+    /** https://laravel.com/docs/5.4/controllers#resource-controllers */
 
-    Route::group([
-        'prefix' => 'student'
-    ], function() {
-        Route::get('{id}', 'StudentController@get');
-        Route::delete('{id}', 'StudentController@delete');
-        Route::get('{id}/edit', 'StudentController@edit');
-        Route::put('new', 'StudentController@new');
-    });
+    $params = [
+        'only' =>  [
+            'index', 'show', 'create', 'edit', 'destroy'
+        ]
+    ];
+
+    Route::resource('courses', 'CoursesController', $params);
+    Route::resource('student', 'StudentController', $params);
+    Route::resource('announcement', 'AnnouncementController', $params);
+    Route::resource('assignment', 'AssignmentController', $params);
+    Route::resource('page', 'PageController', $params);
+    Route::resource('staff', 'StaffController', $params);
+    Route::resource('user', 'UserController', $params);
+    Route::resource('subject', 'SubjectController', $params);
+    Route::resource('role', 'RoleController', $params);
+    Route::resource('group', 'GroupController', $params);
 });

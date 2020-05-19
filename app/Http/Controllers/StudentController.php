@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ApiInterface;
 use App\Models\Student;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class StudentController extends Controller implements ApiInterface
 {
+    /**
+     * @return JsonResponse
+     */
+    public function index()
+    {
+        return $this->response(User::all()->where('profile_type', '=', 'student'), 200);
+    }
+
     /**
      * @param int $id
      *
      * @return JsonResponse
      */
-    public function get(int $id)
+    public function show(int $id)
     {
-        return response()->json([
-            Student::find($id)
-        ]);
+        return $this->response(Student::find($id), 200);
     }
 
     /**
@@ -30,10 +37,7 @@ class StudentController extends Controller
     public function delete(int $id)
     {
         $success = (boolean) Student::destroy($id);
-
-        return response()->json([
-            'success' => $success
-        ]);
+        return $this->response(['success' => $success], 200);
     }
 
     /**
@@ -54,10 +58,10 @@ class StudentController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param \App\Http\Requests\User $request
      * @return JsonResponse
      */
-    public function new(Request $request)
+    public function create(\App\Http\Requests\User $request)
     {
         if (!$content = $request->getContent()) {
             return $this->response("Invalid request", 400);
@@ -97,18 +101,11 @@ class StudentController extends Controller
     }
 
     /**
-     * @param $message
-     * @param int $code
-     *
-     * @return JsonResponse
+     * @inheritDoc
      */
-    private function response($message, $code = 200)
+    public function destroy(int $id)
     {
-        $responseObject = [
-            'message' => $message,
-            'code' => $code
-        ];
-
-        return response()->json($responseObject, $code);
+        $success = (boolean) Student::destroy($id);
+        return $this->response(['success' => $success], 200);
     }
 }
