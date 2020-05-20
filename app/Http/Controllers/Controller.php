@@ -19,7 +19,7 @@ class Controller extends BaseController
         'index' => 'GET',
         'show' => 'GET',
         'create' => 'GET',
-        'edit' => 'PUT',
+        'edit' => 'GET',
         'destroy' => 'DESTROY'
     ];
 
@@ -27,14 +27,14 @@ class Controller extends BaseController
     const ROUTES_WITH_ID = ['show', 'edit', 'destroy'];
 
     /**
-     * @param string $message
+     * @param $message
      * @param int $code
      * @param array $extraLinks
      *
      * @return JsonResponse
      */
     protected function response(
-        string $message,
+        $message,
         int $code = 200,
         array $extraLinks = []
     ): JsonResponse {

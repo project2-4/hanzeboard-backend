@@ -30,15 +30,15 @@ interface ApiInterface
      */
     public function show(int $id);
 
-    /**
-     * GET
-     *
-     * @param FormRequest $request
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function edit(FormRequest $request, int $id);
+//    /**
+//     * GET
+//     *
+//     * @param FormRequest $request
+//     * @param int $id
+//     *
+//     * @return mixed
+//     */
+//    public function edit(FormRequest $request, int $id);
 
     /**
      * DELETE

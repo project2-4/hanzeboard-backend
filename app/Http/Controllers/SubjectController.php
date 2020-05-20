@@ -36,4 +36,20 @@ class SubjectController extends Controller implements ApiInterface
         $success = (boolean) Subject::destroy($id);
         return $this->response(['success' => $success], 200);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function create()
+    {
+        // TODO: Implement create() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function edit()
+    {
+        // TODO: Implement edit() method.
+    }
 }
