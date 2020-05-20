@@ -28,11 +28,9 @@ class UserController extends Controller implements ApiInterface
     }
 
     /**
-     * @param int $id
-     *
-     * @return JsonResponse
+     * @inheritDoc
      */
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $success = (boolean) User::destroy($id);
         return $this->response(['success' => $success], 200);
@@ -55,13 +53,5 @@ class UserController extends Controller implements ApiInterface
     public function edit(FormRequest $request, int $id)
     {
         // TODO: Implement edit() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function destroy(int $id)
-    {
-        // TODO: Implement destroy() method.
     }
 }

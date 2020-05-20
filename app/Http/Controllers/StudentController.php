@@ -30,17 +30,6 @@ class StudentController extends Controller implements ApiInterface
     }
 
     /**
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
-    public function delete(int $id)
-    {
-        $success = (boolean) Student::destroy($id);
-        return $this->response(['success' => $success], 200);
-    }
-
-    /**
      * @param Request $request
      * @param int $id
      *

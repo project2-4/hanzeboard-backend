@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ApiInterface;
 use App\Models\Course;
 use Illuminate\Http\JsonResponse;
 
@@ -29,7 +30,7 @@ class CoursesController extends Controller implements ApiInterface
      *
      * @return JsonResponse
      */
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $success = (boolean) Course::destroy($id);
         return $this->response(['success' => $success], 200);
