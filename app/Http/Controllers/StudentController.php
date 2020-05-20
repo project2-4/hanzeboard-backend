@@ -8,6 +8,8 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\URL;
 
 class StudentController extends Controller implements ApiInterface
 {
@@ -26,7 +28,11 @@ class StudentController extends Controller implements ApiInterface
      */
     public function show(int $id)
     {
-        return $this->response(Student::find($id), 200);
+        $extraLinks = [
+            URL::to('/') . 'api/user/show/' . $id => 'GET'
+        ];
+
+        return $this->response(Student::find($id), 200, $extraLinks);
     }
 
     /**
