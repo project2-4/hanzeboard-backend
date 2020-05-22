@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Repositories\AssignmentsRepository;
 use App\Http\Requests\StoreAssignment;
 use App\Models\Assignment;
+use App\Models\Course;
+use App\Models\Subject;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -25,11 +27,14 @@ class AssignmentController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Subject  $subject
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Course $course, Subject $subject): JsonResponse
     {
-        return $this->response($this->repository->all(), 200);
+        return $this->response($subject->assignments, 200);
     }
 
     /**

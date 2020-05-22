@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositories\SubjectsRepository;
 use App\Http\Requests\StoreSubject;
+use App\Models\Course;
 use App\Models\Subject;
 use Illuminate\Http\JsonResponse;
 
@@ -25,11 +26,13 @@ class SubjectController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Course $course): JsonResponse
     {
-        return $this->response($this->repository->all(), 200);
+        return $this->response($course->pages, 200);
     }
 
     /**

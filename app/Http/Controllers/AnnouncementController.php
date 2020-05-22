@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Repositories\AnnouncementsRepository;
 use App\Http\Requests\StoreAnnouncement;
 use App\Models\Announcement;
+use App\Models\Course;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -25,11 +26,13 @@ class AnnouncementController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Course $course): JsonResponse
     {
-        return $this->response($this->repository->all(), 200);
+        return $this->response($course->subjects, 200);
     }
 
     /**
