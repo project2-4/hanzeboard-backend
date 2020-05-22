@@ -33,6 +33,20 @@ class GroupController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me(): JsonResponse
+    {
+        if (auth()->user()->isStudent()) {
+            $student = auth()->user()->profile();
+
+            return $this->response($student->group, 200);
+        }
+
+        return $this->response(['success' => false, 'errors' => 'Staff members do not have groups'], 400);
+    }
+
+    /**
      * @param  \App\Http\Requests\StoreGroup  $request
      *
      * @return \Illuminate\Http\JsonResponse

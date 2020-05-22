@@ -109,6 +109,7 @@ Route::group(['middleware' => 'api'], function () {
         | Groups
         |--------------------------------------------------------------------------
         */
+        Route::apiResource('groups/me', 'GroupController@me');
         Route::apiResource('groups', 'GroupController');
     });
 });
