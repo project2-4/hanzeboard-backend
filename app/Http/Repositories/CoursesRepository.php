@@ -4,6 +4,7 @@ namespace App\Http\Repositories;
 
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class CoursesRepository
@@ -27,6 +28,10 @@ class CoursesRepository extends Repository
      */
     public function getPublicCourses(): Collection
     {
+        if (Auth::user()->isStaff()) {
+            return $this->model->all();
+        }
+
         return $this->model->where('is_public', true)->get();
     }
 }
