@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\AssignmentsRepository;
+use App\Http\Repositories\CoursesRepository;
 use App\Http\Requests\StoreAnnouncement;
 use App\Models\Announcement;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Class AssignmentController
+ * Class CourseController
  *
  * @package App\Http\Controllers
  */
-class AssignmentController extends Controller
+class CourseController extends Controller
 {
     /**
-     * AssignmentController constructor.
+     * CourseController constructor.
      *
-     * @param  \App\Http\Repositories\AssignmentsRepository  $repository
+     * @param  \App\Http\Repositories\CoursesRepository  $repository
      */
-    public function __construct(AssignmentsRepository $repository)
+    public function __construct(CoursesRepository $repository)
     {
         parent::__construct($repository);
     }

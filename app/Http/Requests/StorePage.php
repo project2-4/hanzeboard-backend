@@ -5,11 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class StoreAnnouncement
+ * Class StorePage
  *
  * @package App\Http\Requests
  */
-class StoreAnnouncement extends FormRequest
+class StorePage extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

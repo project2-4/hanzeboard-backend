@@ -24,7 +24,7 @@ class AnnouncementController extends Controller
         parent::__construct($repository);
     }
 
-    /**¡
+    /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
@@ -71,7 +71,6 @@ class AnnouncementController extends Controller
      * @param  \App\Models\Announcement  $announcement
      *
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Throwable
      */
     public function destroy(Announcement $announcement): JsonResponse
     {

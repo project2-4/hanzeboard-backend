@@ -2,52 +2,80 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ApiInterface;
-use App\Models\Role;
+use App\Http\Repositories\RolesRepository;
+use App\Http\Requests\StoreAnnouncement;
+use App\Models\Announcement;
 use Illuminate\Http\JsonResponse;
 
-class RoleController extends Controller implements ApiInterface
+/**
+ * Class RoleController
+ *
+ * @package App\Http\Controllers
+ */
+class RoleController extends Controller
 {
     /**
-     * @return JsonResponse
-     */
-    public function index()
-    {
-        return $this->response(Role::all(), 200);
-    }
-
-    /**
-     * @param int $id
+     * RoleController constructor.
      *
-     * @return JsonResponse
+     * @param  \App\Http\Repositories\RolesRepository  $repository
      */
-    public function show(int $id)
+    public function __construct(RolesRepository $repository)
     {
-        return $this->response(Role::find($id), 200);
+        parent::__construct($repository);
     }
 
     /**
-     * @inheritDoc
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id)
+    public function index(): JsonResponse
     {
-        $success = (boolean) Role::destroy($id);
-        return $this->response(['success' => $success], 200);
+        return $this->response($this->repository->all(), 200);
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Http\Requests\StoreAnnouncement  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function store(StoreAnnouncement $request): JsonResponse
     {
-        // TODO: Implement create() method.
+        return $this->response(function () use ($request) {
+            return $this->repository->save($request->validated());
+        });
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Models\Announcement  $announcement
+     *
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function edit(int $id)
+    public function show(Announcement $announcement): JsonResponse
     {
-        // TODO: Implement edit() method.
+        return $this->response($announcement, 200);
+    }
+
+    /**
+     * @param  \App\Http\Requests\StoreAnnouncement  $request
+     * @param  \App\Models\Announcement  $announcement
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(StoreAnnouncement $request, Announcement $announcement): JsonResponse
+    {
+        return $this->response(function () use ($request, $announcement) {
+            return $this->repository->save($request->validated(), $announcement);
+        });
+    }
+
+    /**
+     * @param  \App\Models\Announcement  $announcement
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Announcement $announcement): JsonResponse
+    {
+        return $this->response(function () use ($announcement) {
+            return $this->repository->delete($announcement);
+        });
     }
 }
