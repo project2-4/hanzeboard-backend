@@ -2,53 +2,81 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ApiInterface;
+use App\Http\Repositories\AnnouncementsRepository;
+use App\Http\Requests\StoreAnnouncement;
 use App\Models\Announcement;
-use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 
-class AnnouncementController extends Controller implements ApiInterface
+/**
+ * Class AnnouncementController
+ *
+ * @package App\Http\Controllers
+ */
+class AnnouncementController extends Controller
 {
     /**
-     * @param int $id
+     * AnnouncementController constructor.
      *
-     * @return JsonResponse
+     * @param  \App\Http\Repositories\AnnouncementsRepository  $repository
      */
-    public function show(int $id)
+    public function __construct(AnnouncementsRepository $repository)
     {
-        return $this->response(Announcement::find($id), 200);
+        parent::__construct($repository);
+    }
+
+    /**¡
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        return $this->response($this->repository->all(), 200);
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Http\Requests\StoreAnnouncement  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function store(StoreAnnouncement $request): JsonResponse
     {
-        return $this->response(Announcement::all(), 200);
+        return $this->response(function () use ($request) {
+            return $this->repository->save($request->validated());
+        });
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Models\Announcement  $announcement
+     *
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function destroy(int $id)
+    public function show(Announcement $announcement): JsonResponse
     {
-        $success = (boolean) Student::destroy($id);
-        return $this->response(['success' => $success], 200);
+        return $this->response($announcement, 200);
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Http\Requests\StoreAnnouncement  $request
+     * @param  \App\Models\Announcement  $announcement
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function update(StoreAnnouncement $request, Announcement $announcement): JsonResponse
     {
-        // TODO: Implement create() method.
+        return $this->response(function () use ($request, $announcement) {
+            return $this->repository->save($request->validated(), $announcement);
+        });
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Models\Announcement  $announcement
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function edit(int $id)
+    public function destroy(Announcement $announcement): JsonResponse
     {
-        // TODO: Implement edit() method.
+        return $this->response(function () use ($announcement) {
+            return $this->repository->delete($announcement);
+        });
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Student;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,43 +12,97 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group([
-    'middleware' => 'api'
-], function () {
+Route::group(['middleware' => 'api'], function () {
 
-    Route::group([
-        'prefix' => 'auth'
-    ], function () {
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication
+    |--------------------------------------------------------------------------
+    */
+    Route::group(['prefix' => 'auth'], function () {
         Route::post('login', 'AuthController@login');
-        Route::post('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
-        Route::post('me', 'AuthController@me');
+
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('logout', 'AuthController@logout');
+            Route::post('refresh', 'AuthController@refresh');
+            Route::post('me', 'AuthController@me');
+        });
     });
 
-    Route::group([
-        'middleware' => ['auth:api', 'jwt.refresh']
-    ], function () {
-        Route::get('courses', 'CoursesController@get');
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication required
+    |--------------------------------------------------------------------------
+    */
+    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
+        /*
+        |--------------------------------------------------------------------------
+        | Courses
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('courses', 'CoursesController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Students
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('student', 'StudentController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Announcements
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('announcement', 'AnnouncementController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Assignments
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('assignment', 'AssignmentController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pages
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('page', 'PageController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Staff
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('staff', 'StaffController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Users
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('user', 'UserController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Subjects
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('subject', 'SubjectController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Roles
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('role', 'RoleController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Groups
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('group', 'GroupController');
     });
-
-    /**************************     *********************/
-    /************************** API *********************/
-    /** https://laravel.com/docs/5.4/controllers#resource-controllers */
-
-    $params = [
-        'only' =>  [
-            'index', 'show', 'create', 'edit', 'destroy'
-        ]
-    ];
-
-    Route::resource('courses', 'CoursesController', $params);
-    Route::resource('student', 'StudentController', $params);
-    Route::resource('announcement', 'AnnouncementController', $params);
-    Route::resource('assignment', 'AssignmentController', $params);
-    Route::resource('page', 'PageController', $params);
-    Route::resource('staff', 'StaffController', $params);
-    Route::resource('user', 'UserController', $params);
-    Route::resource('subject', 'SubjectController', $params);
-    Route::resource('role', 'RoleController', $params);
-    Route::resource('group', 'GroupController', $params);
 });

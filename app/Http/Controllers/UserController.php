@@ -37,11 +37,11 @@ class UserController extends Controller implements ApiInterface
     }
 
     /**
-     * @param \App\Http\Requests\User $request
+     * @param \App\Http\Requests\StoreUser $request
      *
      * @return mixed|void
      */
-    public function create(\App\Http\Requests\User $request)
+    public function create(\App\Http\Requests\StoreUser $request)
     {
         dd('asdsad');
         dd($request->validated());

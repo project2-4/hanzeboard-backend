@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "637eb1418241899f59b9cda1d72586df",
+    "content-hash": "3302c06cfadd9f11232791c78688b893",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2979,47 +2979,6 @@
                 "uri"
             ],
             "time": "2018-01-15T21:00:49+00:00"
-        },
-        {
-            "name": "royvoetman/laravel-enhanced-requests",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RoyVoetman/laravel-enhanced-requests.git",
-                "reference": "108aefebacb932c6b4e985c71ef40a480e4002b2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RoyVoetman/laravel-enhanced-requests/zipball/108aefebacb932c6b4e985c71ef40a480e4002b2",
-                "reference": "108aefebacb932c6b4e985c71ef40a480e4002b2",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/http": "^5.7|^6.0|^7.0",
-                "illuminate/support": "^5.7|^5.8|^5.9|^6.0|^7.0",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "RoyVoetman\\Requests\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roy Voetman",
-                    "email": "royvoetman@outlook.com"
-                }
-            ],
-            "description": "This Laravel package provide developers with and enhanced version of laravels form request class.",
-            "time": "2020-03-05T17:26:11+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

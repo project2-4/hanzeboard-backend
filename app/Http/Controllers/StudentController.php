@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUser;
 use App\Interfaces\ApiInterface;
 use App\Models\Student;
 use App\Models\User;
@@ -53,10 +54,11 @@ class StudentController extends Controller implements ApiInterface
     }
 
     /**
-     * @param \App\Http\Requests\User $request
+     * @param \App\Http\Requests\StoreUser  $request
+     *
      * @return JsonResponse
      */
-    public function create(\App\Http\Requests\User $request)
+    public function create(StoreUser $request)
     {
         if (!$content = $request->getContent()) {
             return $this->response("Invalid request", 400);

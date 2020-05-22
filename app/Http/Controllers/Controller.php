@@ -2,96 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\Repository;
+use App\Traits\GeneratesResponses;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
-class Controller extends BaseController
+/**
+ * Class Controller
+ *
+ * @package App\Http\Controllers
+ */
+abstract class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    /** @var array ROUTES */
-    const ROUTES = [
-        'index' => 'GET',
-        'show' => 'GET',
-        'create' => 'GET',
-        'edit' => 'GET',
-        'destroy' => 'DESTROY'
-    ];
-
-    /** @var array ROUTES_WITH_ID */
-    const ROUTES_WITH_ID = ['show', 'edit', 'destroy'];
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, GeneratesResponses;
 
     /**
-     * @param $message
-     * @param int $code
-     * @param array $extraLinks
+     * @var \App\Http\Repositories\Repository
+     */
+    protected $repository;
+
+    /**
+     * Controller constructor.
      *
-     * @return JsonResponse
+     * @param  \App\Http\Repositories\Repository|null  $repository
      */
-    protected function response(
-        $message,
-        int $code = 200,
-        array $extraLinks = []
-    ): JsonResponse {
-        $links = $this->getLinks();
-
-        if (count($extraLinks) > 0 ) {
-            foreach ($extraLinks as $route => $method) {
-                $links[] = $this->addLink($route, $method);
-            }
-        }
-
-        $responseObject = [
-            'message' => $message,
-            'code' => $code,
-            'links' => $links
-        ];
-
-        return response()->json($responseObject, $code);
-    }
-
-    /**
-     * @param string $url
-     * @param string $method
-     *
-     * @return array
-     */
-    protected function addLink(
-        string $url,
-        string $method = 'GET'
-    ): array {
-        return [
-            'url' => $url,
-            'method' => $method
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function getLinks(): array
+    public function __construct(?Repository $repository = null)
     {
-        $url = URL::to('/') . Route::getCurrentRoute()->getCompiled()->getStaticPrefix();
-        $links = [];
-
-        foreach (self::ROUTES as $route => $method) {
-            $newLink = [
-                'url' => $url . '/' . $route,
-                'method' => $method
-            ];
-
-            if (in_array($route, self::ROUTES_WITH_ID)) {
-                $newLink['url'] .= '/' . implode("", Route::getCurrentRoute()->parameters());
-            }
-
-            $links[] = $newLink;
-        }
-
-        return $links;
+        $this->repository = $repository;
     }
 }
