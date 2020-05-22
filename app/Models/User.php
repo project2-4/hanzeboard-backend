@@ -83,7 +83,24 @@ class User extends Model implements
     public function getJWTCustomClaims()
     {
         return [
-            'role' => 'Admin'
+            'role' => $this->role,
+            'profile' => $this->profile_type
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStaff(): bool
+    {
+        return $this->profile_type === 'staff';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStudent(): bool
+    {
+        return $this->profile_type === 'student';
     }
 }

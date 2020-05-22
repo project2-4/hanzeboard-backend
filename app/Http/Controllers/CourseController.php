@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Repositories\CoursesRepository;
 use App\Http\Requests\StoreCourse;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class CourseController
@@ -29,7 +31,15 @@ class CourseController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->response($this->repository->all(), 200);
+        return $this->response(Auth::user()->courses, 200);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function all(): JsonResponse
+    {
+        return $this->response($this->repository->getPublicCourses(), 200);
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
+
 /**
  * Trait GeneratesLinks
  *

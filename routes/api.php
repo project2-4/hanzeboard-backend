@@ -40,35 +40,36 @@ Route::group(['middleware' => 'api'], function () {
         | Courses
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('courses', 'CoursesController');
+        Route::get('courses/all', 'CourseController@all')->name('courses.all');
+        Route::apiResource('courses', 'CourseController');
 
         /*
         |--------------------------------------------------------------------------
         | Students
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('student', 'StudentController');
+        Route::apiResource('students', 'StudentController');
 
         /*
         |--------------------------------------------------------------------------
         | Announcements
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('announcement', 'AnnouncementController');
+        Route::apiResource('announcements', 'AnnouncementController');
 
         /*
         |--------------------------------------------------------------------------
         | Assignments
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('assignment', 'AssignmentController');
+        Route::apiResource('assignments', 'AssignmentController');
 
         /*
         |--------------------------------------------------------------------------
         | Pages
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('page', 'PageController');
+        Route::apiResource('pages', 'PageController');
 
         /*
         |--------------------------------------------------------------------------
@@ -82,27 +83,27 @@ Route::group(['middleware' => 'api'], function () {
         | Users
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('user', 'UserController');
+        Route::apiResource('users', 'UserController');
 
         /*
         |--------------------------------------------------------------------------
         | Subjects
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('subject', 'SubjectController');
+        Route::apiResource('subjects', 'SubjectController');
 
         /*
         |--------------------------------------------------------------------------
         | Roles
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('role', 'RoleController');
+        Route::apiResource('roles', 'RoleController');
 
         /*
         |--------------------------------------------------------------------------
         | Groups
         |--------------------------------------------------------------------------
         */
-        Route::apiResource('group', 'GroupController');
+        Route::apiResource('groups', 'GroupController');
     });
 });
