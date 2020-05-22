@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\GroupsRepository;
-use App\Http\Requests\StoreAnnouncement;
-use App\Models\Announcement;
+use App\Http\Requests\StoreGroup;
+use App\Models\Group;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -33,11 +33,11 @@ class GroupController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\StoreAnnouncement  $request
+     * @param  \App\Http\Requests\StoreGroup  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreAnnouncement $request): JsonResponse
+    public function store(StoreGroup $request): JsonResponse
     {
         return $this->response(function () use ($request) {
             return $this->repository->save($request->validated());
@@ -45,37 +45,37 @@ class GroupController extends Controller
     }
 
     /**
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Models\Group  $group
      *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function show(Announcement $announcement): JsonResponse
+    public function show(Group $group): JsonResponse
     {
-        return $this->response($announcement, 200);
+        return $this->response($group, 200);
     }
 
     /**
-     * @param  \App\Http\Requests\StoreAnnouncement  $request
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Http\Requests\StoreGroup  $request
+     * @param  \App\Models\Group  $group
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(StoreAnnouncement $request, Announcement $announcement): JsonResponse
+    public function update(StoreGroup $request, Group $group): JsonResponse
     {
-        return $this->response(function () use ($request, $announcement) {
-            return $this->repository->save($request->validated(), $announcement);
+        return $this->response(function () use ($request, $group) {
+            return $this->repository->save($request->validated(), $group);
         });
     }
 
     /**
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Models\Group  $group
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Announcement $announcement): JsonResponse
+    public function destroy(Group $group): JsonResponse
     {
-        return $this->response(function () use ($announcement) {
-            return $this->repository->delete($announcement);
+        return $this->response(function () use ($group) {
+            return $this->repository->delete($group);
         });
     }
 }

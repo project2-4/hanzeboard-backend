@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\SubjectsRepository;
-use App\Http\Requests\StoreAnnouncement;
-use App\Models\Announcement;
+use App\Http\Requests\StoreSubject;
+use App\Models\Subject;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -33,11 +33,11 @@ class SubjectController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\StoreAnnouncement  $request
+     * @param  \App\Http\Requests\StoreSubject  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreAnnouncement $request): JsonResponse
+    public function store(StoreSubject $request): JsonResponse
     {
         return $this->response(function () use ($request) {
             return $this->repository->save($request->validated());
@@ -45,37 +45,37 @@ class SubjectController extends Controller
     }
 
     /**
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function show(Announcement $announcement): JsonResponse
+    public function show(Subject $subject): JsonResponse
     {
-        return $this->response($announcement, 200);
+        return $this->response($subject, 200);
     }
 
     /**
-     * @param  \App\Http\Requests\StoreAnnouncement  $request
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Http\Requests\StoreSubject  $request
+     * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(StoreAnnouncement $request, Announcement $announcement): JsonResponse
+    public function update(StoreSubject $request, Subject $subject): JsonResponse
     {
-        return $this->response(function () use ($request, $announcement) {
-            return $this->repository->save($request->validated(), $announcement);
+        return $this->response(function () use ($request, $subject) {
+            return $this->repository->save($request->validated(), $subject);
         });
     }
 
     /**
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Announcement $announcement): JsonResponse
+    public function destroy(Subject $subject): JsonResponse
     {
-        return $this->response(function () use ($announcement) {
-            return $this->repository->delete($announcement);
+        return $this->response(function () use ($subject) {
+            return $this->repository->delete($subject);
         });
     }
 }

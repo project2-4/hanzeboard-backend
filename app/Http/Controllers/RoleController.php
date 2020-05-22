@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\RolesRepository;
-use App\Http\Requests\StoreAnnouncement;
-use App\Models\Announcement;
+use App\Http\Requests\StoreRole;
+use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -33,11 +33,11 @@ class RoleController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\StoreAnnouncement  $request
+     * @param  \App\Http\Requests\StoreRole  $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreAnnouncement $request): JsonResponse
+    public function store(StoreRole $request): JsonResponse
     {
         return $this->response(function () use ($request) {
             return $this->repository->save($request->validated());
@@ -45,37 +45,37 @@ class RoleController extends Controller
     }
 
     /**
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Models\Role  $role
      *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function show(Announcement $announcement): JsonResponse
+    public function show(Role $role): JsonResponse
     {
-        return $this->response($announcement, 200);
+        return $this->response($role, 200);
     }
 
     /**
-     * @param  \App\Http\Requests\StoreAnnouncement  $request
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Http\Requests\StoreRole  $request
+     * @param  \App\Models\Role  $role
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(StoreAnnouncement $request, Announcement $announcement): JsonResponse
+    public function update(StoreRole $request, Role $role): JsonResponse
     {
-        return $this->response(function () use ($request, $announcement) {
-            return $this->repository->save($request->validated(), $announcement);
+        return $this->response(function () use ($request, $role) {
+            return $this->repository->save($request->validated(), $role);
         });
     }
 
     /**
-     * @param  \App\Models\Announcement  $announcement
+     * @param  \App\Models\Role  $role
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Announcement $announcement): JsonResponse
+    public function destroy(Role $role): JsonResponse
     {
-        return $this->response(function () use ($announcement) {
-            return $this->repository->delete($announcement);
+        return $this->response(function () use ($role) {
+            return $this->repository->delete($role);
         });
     }
 }
