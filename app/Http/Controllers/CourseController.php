@@ -51,7 +51,6 @@ class CourseController extends Controller
     public function store(StoreCourse $request): JsonResponse
     {
         [$success, $id] = $this->repository->save($request->validated());
-        $id = $this->repository->getModel()->id;
 
         return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
@@ -91,5 +90,18 @@ class CourseController extends Controller
         $success = $this->repository->delete($course);
 
         return $this->response(compact('success'), $this->getStatusCode($success));
+    }
+
+    /**
+     * @param  \App\Models\Course  $course
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
+     */
+    public function staff(Course $course): JsonResponse
+    {
+        $staff = $course->users()->where('profile_type', 'staff')->with('profile')->get();
+
+        return $this->response(compact('staff'), 200);
     }
 }

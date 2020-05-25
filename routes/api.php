@@ -34,8 +34,7 @@ Route::group(['middleware' => 'api'], function () {
     | Authentication required
     |--------------------------------------------------------------------------
     */
-    //Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
-    Route::group(['middleware' => []], function () {
+    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
         /*
         |--------------------------------------------------------------------------
         | Courses
@@ -45,6 +44,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::apiResource('courses', 'CourseController');
 
         Route::group(['prefix' => 'courses/{course}'], function () {
+            Route::get('staff', 'CourseController@staff')->name('courses.staff');
             /*
             |--------------------------------------------------------------------------
             | Announcements
