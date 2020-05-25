@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Student;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,37 +12,97 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group([
-    'middleware' => 'api'
-], function () {
+Route::group(['middleware' => 'api'], function () {
 
-    Route::group([
-        'prefix' => 'auth'
-    ], function () {
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication
+    |--------------------------------------------------------------------------
+    */
+    Route::group(['prefix' => 'auth'], function () {
         Route::post('login', 'AuthController@login');
-        Route::post('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
-        Route::post('me', 'AuthController@me');
+
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('logout', 'AuthController@logout');
+            Route::post('refresh', 'AuthController@refresh');
+            Route::post('me', 'AuthController@me');
+        });
     });
 
-    Route::get('test', 'CoursesController@test');
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication required
+    |--------------------------------------------------------------------------
+    */
+    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
+        /*
+        |--------------------------------------------------------------------------
+        | Courses
+        |--------------------------------------------------------------------------
+        */
+        Route::get('courses/all', 'CourseController@all')->name('courses.all');
+        Route::apiResource('courses', 'CourseController');
 
-    Route::group([
-        'middleware' => ['auth:api', 'jwt.refresh']
-    ], function () {
-        Route::get('courses', 'CoursesController@get');
-    });
+        Route::group(['prefix' => 'courses/{course}'], function () {
+            Route::get('staff', 'CourseController@staff')->name('courses.staff');
+            /*
+            |--------------------------------------------------------------------------
+            | Announcements
+            |--------------------------------------------------------------------------
+            */
+            Route::apiResource('announcements', 'AnnouncementController');
 
-    /**************************     *********************/
-    /************************** API *********************/
-    /**************************     *********************/
+            /*
+            |--------------------------------------------------------------------------
+            | Pages
+            |--------------------------------------------------------------------------
+            */
+            Route::apiResource('pages', 'PageController');
 
-    Route::group([
-        'prefix' => 'student'
-    ], function() {
-        Route::get('{id}', 'StudentController@get');
-        Route::delete('{id}', 'StudentController@delete');
-        Route::get('{id}/edit', 'StudentController@edit');
-        Route::put('new', 'StudentController@new');
+            /*
+            |--------------------------------------------------------------------------
+            | Subjects
+            |--------------------------------------------------------------------------
+            */
+            Route::apiResource('subjects', 'SubjectController');
+
+            Route::group(['prefix' => 'subjects/{subject}'], function () {
+                /*
+                |--------------------------------------------------------------------------
+                | Assignments
+                |--------------------------------------------------------------------------
+                */
+                Route::apiResource('assignments', 'AssignmentController');
+            });
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Students
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('students', 'StudentController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Staff
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('staff', 'StaffController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Roles
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('roles', 'RoleController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Groups
+        |--------------------------------------------------------------------------
+        */
+        Route::get('groups/me', 'GroupController@me');
+        Route::apiResource('groups', 'GroupController');
     });
 });

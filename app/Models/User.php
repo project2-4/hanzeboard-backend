@@ -16,7 +16,8 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
- * @method static where(string $string, string $string1, $email)
+ * @method static where(string $string, string $string1, $string2)
+ * @method static find(int $id)
  */
 class User extends Model implements
     AuthenticatableContract,
@@ -82,7 +83,24 @@ class User extends Model implements
     public function getJWTCustomClaims()
     {
         return [
-            'role' => 'Admin'
+            'role' => $this->role,
+            'profile' => $this->profile_type
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStaff(): bool
+    {
+        return $this->profile_type === 'staff';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStudent(): bool
+    {
+        return $this->profile_type === 'student';
     }
 }

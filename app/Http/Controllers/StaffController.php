@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\StudentsRepository;
-use App\Http\Requests\StoreStudent;
-use App\Models\Student;
+use App\Http\Repositories\StaffRepository;
+use App\Http\Requests\StoreStaff;
+use App\Models\Staff;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\URL;
 
-class StudentController extends Controller
+class StaffController extends Controller
 {
     /**
-     * StudentController constructor.
+     * StaffController constructor.
      *
-     * @param  \App\Http\Repositories\StudentsRepository  $repository
+     * @param  \App\Http\Repositories\StaffRepository  $repository
      */
-    public function __construct(StudentsRepository $repository)
+    public function __construct(StaffRepository $repository)
     {
         parent::__construct($repository);
     }
@@ -28,22 +29,22 @@ class StudentController extends Controller
     }
 
     /**
-     * @param  \App\Models\Student  $student
+     * @param  \App\Models\Staff  $staff
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Student $student): JsonResponse
+    public function show(Staff $staff): JsonResponse
     {
-        return $this->response($student->load('user'), 200);
+        return $this->response($staff->load('user'), 200);
     }
 
     /**
-     * @param  \App\Http\Requests\StoreStudent  $request
+     * @param  \App\Http\Requests\StoreStaff  $request
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function store(StoreStudent $request): JsonResponse
+    public function store(StoreStaff $request): JsonResponse
     {
         [$success, $id] = $this->repository->save($request->validated());
 
@@ -51,28 +52,28 @@ class StudentController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\StoreStudent  $request
-     * @param  \App\Models\Student  $student
+     * @param  \App\Http\Requests\StoreStaff  $request
+     * @param  \App\Models\Staff  $staff
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function update(StoreStudent $request, Student $student): JsonResponse
+    public function update(StoreStaff $request, Staff $staff): JsonResponse
     {
-        [$success, $id] = $this->repository->save($request->validated(), $student);
+        [$success, $id] = $this->repository->save($request->validated(), $staff);
 
         return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
-     * @param  \App\Models\Student  $student
+     * @param  \App\Models\Staff  $staff
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function destroy(Student $student): JsonResponse
+    public function destroy(Staff $staff): JsonResponse
     {
-        $success = $this->repository->delete($student);
+        $success = $this->repository->delete($staff);
 
         return $this->response(compact('success'), $this->getStatusCode($success));
     }
