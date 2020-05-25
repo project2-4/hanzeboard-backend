@@ -49,8 +49,8 @@ class AssignmentController extends Controller
     public function store(StoreAssignment $request, Course $course, Subject $subject): JsonResponse
     {
         [$success, $id] = $this->repository->save(array_merge($request->validated(), [
-            'subject' => $subject->id,
-            'deadline' => Carbon::createFromFormat('Y-m-d', $request->get('deadline'))
+            'subject_id' => $subject->id,
+            'deadline' => Carbon::createFromFormat('Y-m-d H:i:s', $request->get('deadline').'00:00:00')
         ]));
 
         return $this->response(compact('success', 'id'), $this->getStatusCode($success));
