@@ -3,6 +3,7 @@
 namespace App\Http\Repositories;
 
 use App\Http\Requests\StoreUser;
+use App\Models\Staff;
 use App\Models\Student;
 use App\Models\User;
 use App\Traits\CreatesUsers;
@@ -15,7 +16,7 @@ use Illuminate\Support\Arr;
  *
  * @package App\Http\Repositories
  */
-class StudentsRepository extends Repository
+class StaffRepository extends Repository
 {
     use CreatesUsers;
 
@@ -25,12 +26,12 @@ class StudentsRepository extends Repository
     private $user;
 
     /**
-     * StudentsRepository constructor.
+     * StaffRepository constructor.
      *
-     * @param  \App\Models\Student  $model
+     * @param  \App\Models\Staff  $model
      * @param  \App\Models\User  $user
      */
-    public function __construct(Student $model, User $user)
+    public function __construct(Staff $model, User $user)
     {
         parent::__construct($model);
 
@@ -45,12 +46,12 @@ class StudentsRepository extends Repository
      */
     protected function fill(array $data, Model $model = null): bool
     {
-        [$userData, $studentData] = $this->splitData($data);
+        [$userData, $staffData] = $this->splitData($data);
 
-        $success = parent::fill($studentData);
+        $success = parent::fill($staffData);
 
         if (!$success) {
-            throw new \RuntimeException('Invalid state: could not create a student object');
+            throw new \RuntimeException('Invalid state: could not create a staff object');
         }
 
         if (is_null($model)) {
@@ -73,6 +74,6 @@ class StudentsRepository extends Repository
      */
     protected function getType()
     {
-        return 'student';
+        return 'staff';
     }
 }
