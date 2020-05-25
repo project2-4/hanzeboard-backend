@@ -36,12 +36,13 @@ class RoleController extends Controller
      * @param  \App\Http\Requests\StoreRole  $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function store(StoreRole $request): JsonResponse
     {
-        return $this->response(function () use ($request) {
-            return $this->repository->save($request->validated());
-        });
+        $success = $this->repository->save($request->validated());
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
@@ -59,23 +60,25 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function update(StoreRole $request, Role $role): JsonResponse
     {
-        return $this->response(function () use ($request, $role) {
-            return $this->repository->save($request->validated(), $role);
-        });
+        $success = $this->repository->save($request->validated(), $role);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
      * @param  \App\Models\Role  $role
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function destroy(Role $role): JsonResponse
     {
-        return $this->response(function () use ($role) {
-            return $this->repository->delete($role);
-        });
+        $success = $this->repository->delete($role);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

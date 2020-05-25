@@ -39,12 +39,13 @@ class SubjectController extends Controller
      * @param  \App\Http\Requests\StoreSubject  $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function store(StoreSubject $request): JsonResponse
     {
-        return $this->response(function () use ($request) {
-            return $this->repository->save($request->validated());
-        });
+        $success = $this->repository->save($request->validated());
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
@@ -62,23 +63,25 @@ class SubjectController extends Controller
      * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function update(StoreSubject $request, Subject $subject): JsonResponse
     {
-        return $this->response(function () use ($request, $subject) {
-            return $this->repository->save($request->validated(), $subject);
-        });
+        $success = $this->repository->save($request->validated(), $subject);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
      * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function destroy(Subject $subject): JsonResponse
     {
-        return $this->response(function () use ($subject) {
-            return $this->repository->delete($subject);
-        });
+        $success = $this->repository->delete($subject);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

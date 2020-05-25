@@ -46,12 +46,13 @@ class CourseController extends Controller
      * @param  \App\Http\Requests\StoreCourse  $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function store(StoreCourse $request): JsonResponse
     {
-        return $this->response(function () use ($request) {
-            return $this->repository->save($request->validated());
-        });
+        $success = $this->repository->save($request->validated());
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
@@ -69,23 +70,25 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function update(StoreCourse $request, Course $course): JsonResponse
     {
-        return $this->response(function () use ($request, $course) {
-            return $this->repository->save($request->validated(), $course);
-        });
+        $success = $this->repository->save($request->validated(), $course);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
      * @param  \App\Models\Course  $course
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function destroy(Course $course): JsonResponse
     {
-        return $this->response(function () use ($course) {
-            return $this->repository->delete($course);
-        });
+        $success = $this->repository->delete($course);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

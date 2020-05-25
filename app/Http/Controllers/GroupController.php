@@ -50,12 +50,13 @@ class GroupController extends Controller
      * @param  \App\Http\Requests\StoreGroup  $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function store(StoreGroup $request): JsonResponse
     {
-        return $this->response(function () use ($request) {
-            return $this->repository->save($request->validated());
-        });
+        $success = $this->repository->save($request->validated());
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
@@ -73,23 +74,25 @@ class GroupController extends Controller
      * @param  \App\Models\Group  $group
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function update(StoreGroup $request, Group $group): JsonResponse
     {
-        return $this->response(function () use ($request, $group) {
-            return $this->repository->save($request->validated(), $group);
-        });
+        $success = $this->repository->save($request->validated(), $group);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
      * @param  \App\Models\Group  $group
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function destroy(Group $group): JsonResponse
     {
-        return $this->response(function () use ($group) {
-            return $this->repository->delete($group);
-        });
+        $success = $this->repository->delete($group);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

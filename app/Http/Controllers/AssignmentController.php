@@ -41,12 +41,13 @@ class AssignmentController extends Controller
      * @param  \App\Http\Requests\StoreAssignment  $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function store(StoreAssignment $request): JsonResponse
     {
-        return $this->response(function () use ($request) {
-            return $this->repository->save($request->validated());
-        });
+        $success = $this->repository->save($request->validated());
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
@@ -64,23 +65,25 @@ class AssignmentController extends Controller
      * @param  \App\Models\Assignment  $assignment
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function update(StoreAssignment $request, Assignment $assignment): JsonResponse
     {
-        return $this->response(function () use ($request, $assignment) {
-            return $this->repository->save($request->validated(), $assignment);
-        });
+        $success = $this->repository->save($request->validated(), $assignment);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
      * @param  \App\Models\Assignment  $assignment
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function destroy(Assignment $assignment): JsonResponse
     {
-        return $this->response(function () use ($assignment) {
-            return $this->repository->delete($assignment);
-        });
+        $success = $this->repository->delete($assignment);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

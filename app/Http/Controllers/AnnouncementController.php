@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAnnouncement;
 use App\Models\Announcement;
 use App\Models\Course;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class AnnouncementController
@@ -37,14 +38,19 @@ class AnnouncementController extends Controller
 
     /**
      * @param  \App\Http\Requests\StoreAnnouncement  $request
+     * @param  \App\Models\Course  $course
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function store(StoreAnnouncement $request): JsonResponse
+    public function store(StoreAnnouncement $request, Course $course): JsonResponse
     {
-        return $this->response(function () use ($request) {
-            return $this->repository->save($request->validated());
-        });
+        $success = $this->repository->save(array_merge($request->validated(), [
+            'posted_by' => Auth::user()->profile()->id,
+            'course_id' => $course->id
+        ]));
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
@@ -62,23 +68,25 @@ class AnnouncementController extends Controller
      * @param  \App\Models\Announcement  $announcement
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function update(StoreAnnouncement $request, Announcement $announcement): JsonResponse
     {
-        return $this->response(function () use ($request, $announcement) {
-            return $this->repository->save($request->validated(), $announcement);
-        });
+        $success = $this->repository->save($request->validated(), $announcement);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
      * @param  \App\Models\Announcement  $announcement
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function destroy(Announcement $announcement): JsonResponse
     {
-        return $this->response(function () use ($announcement) {
-            return $this->repository->delete($announcement);
-        });
+        $success = $this->repository->delete($announcement);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

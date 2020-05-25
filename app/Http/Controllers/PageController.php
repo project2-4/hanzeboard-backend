@@ -39,12 +39,13 @@ class PageController extends Controller
      * @param  \App\Http\Requests\StorePage  $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function store(StorePage $request): JsonResponse
     {
-        return $this->response(function () use ($request) {
-            return $this->repository->save($request->validated());
-        });
+        $success = $this->repository->save($request->validated());
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
@@ -62,23 +63,25 @@ class PageController extends Controller
      * @param  \App\Models\Page  $page
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function update(StorePage $request, Page $page): JsonResponse
     {
-        return $this->response(function () use ($request, $page) {
-            return $this->repository->save($request->validated(), $page);
-        });
+        $success = $this->repository->save($request->validated(), $page);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
      * @param  \App\Models\Page  $page
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function destroy(Page $page): JsonResponse
     {
-        return $this->response(function () use ($page) {
-            return $this->repository->delete($page);
-        });
+        $success = $this->repository->delete($page);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

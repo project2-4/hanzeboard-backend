@@ -32,4 +32,14 @@ abstract class Controller extends BaseController
     {
         $this->repository = $repository;
     }
+
+    /**
+     * @param  bool  $success
+     *
+     * @return int
+     */
+    public function getStatusCode(bool $success): int
+    {
+        return $success ? 200 : 422;
+    }
 }

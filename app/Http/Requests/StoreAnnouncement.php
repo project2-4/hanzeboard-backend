@@ -19,7 +19,8 @@ class StoreAnnouncement extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required'
+            'title' => 'required|string|min:2|max:191',
+            'content' => 'required|string|min:5',
         ];
     }
 }
