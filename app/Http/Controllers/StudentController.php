@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\StudentsRepository;
+use App\Http\Requests\StoreStudent;
 use App\Http\Requests\StoreUser;
 use App\Models\Student;
 use App\Models\User;
@@ -36,82 +37,50 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Student $student)
+    public function show(Student $student): JsonResponse
     {
-        $extraLinks = [
-            URL::to('/') . 'api/user/show/' . $student->id => 'GET'
-        ];
+        $extraLinks = [URL::to("/api/user/show/{$student->id}") => 'GET'];
 
         return $this->response($student, 200, $extraLinks);
     }
 
     /**
-     * @param \App\Http\Requests\StoreUser  $request
+     * @param  \App\Http\Requests\StoreStudent  $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function store(StoreStudent $request)
+    public function store(StoreStudent $request): JsonResponse
     {
-        if (!$content = $request->getContent()) {
-            return $this->response("Invalid request", 400);
-        }
+        $success = $this->repository->save($request->validated());
 
-        $content = json_decode($content, true);
-        $studentArray = $content['student'] ?? [];
-
-        if (!isset($studentArray['user'])) {
-            return $this->response("User has to be defined", 400);
-        }
-
-        $userContent = $studentArray['user'];
-
-        if (isset($userContent['email'])) {
-            $userExists = User::where('email', '=', $userContent['email'])->firstOrFail();
-
-            if ($userExists) {
-                return $this->response("User already exists with email" . $userContent['email'], 422);
-            }
-        }
-
-        if (isset($userContent['password'])) {
-            $userContent['password'] = bcrypt($userContent['password']);
-        }
-
-        unset($studentArray['user']);
-
-        try {
-            $userContent['profile_id'] = factory(Student::class)->create($studentArray);
-            $user = factory(User::class)->create($userContent);
-        } catch (Exception $exception) {
-            return $this->response("Something went wrong, try again later", 500);
-        }
-
-        return $this->response($user);
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
-     * @param Request $request
-     * @param int $id
+     * @param  \App\Http\Requests\StoreStudent  $request
+     * @param  \App\Models\Student  $student
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function update(Request $request, int $id)
+    public function update(StoreStudent $request, Student $student): JsonResponse
     {
-        $student = Student::find($id);
-        $content = json_decode($request->getContent(), true);
+        $success = $this->repository->save($request->validated(), $student);
 
-        //TODO: Update student here with request content
-        $student->save();
-
-        return response()->json($student);
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Models\Student  $student
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function destroy(int $id)
+    public function destroy(Student $student): JsonResponse
     {
-        $success = (boolean) Student::destroy($id);
-        return $this->response(['success' => $success], 200);
+        $success = $this->repository->delete($student);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }
