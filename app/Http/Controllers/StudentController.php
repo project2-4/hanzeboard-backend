@@ -35,9 +35,7 @@ class StudentController extends Controller
      */
     public function show(Student $student): JsonResponse
     {
-        $extraLinks = [URL::to("/api/user/show/{$student->id}") => 'GET'];
-
-        return $this->response($student, 200, $extraLinks);
+        return $this->response($student, 200);
     }
 
     /**

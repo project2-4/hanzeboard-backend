@@ -35,9 +35,7 @@ class StaffController extends Controller
      */
     public function show(Staff $staff): JsonResponse
     {
-        $extraLinks = [URL::to("/api/user/show/{$staff->id}") => 'GET'];
-
-        return $this->response($staff, 200, $extraLinks);
+        return $this->response($staff, 200);
     }
 
     /**

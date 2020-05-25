@@ -40,7 +40,7 @@ class StudentsRepository extends Repository
      */
     public function all(): Collection
     {
-        return $this->user->all()->where('profile_type', $this->getType());
+        return $this->user->with('profile')->where('profile_type', $this->getType())->get();
     }
 
     /**

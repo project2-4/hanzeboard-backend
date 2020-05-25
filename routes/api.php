@@ -35,7 +35,7 @@ Route::group(['middleware' => 'api'], function () {
     |--------------------------------------------------------------------------
     */
     //Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
-    Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['middleware' => []], function () {
         /*
         |--------------------------------------------------------------------------
         | Courses
