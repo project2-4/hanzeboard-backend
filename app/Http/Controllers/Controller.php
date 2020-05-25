@@ -40,6 +40,6 @@ abstract class Controller extends BaseController
      */
     public function getStatusCode(bool $success): int
     {
-        return $success ? 200 : 422;
+        return $success ? 200 : 400;
     }
 }
