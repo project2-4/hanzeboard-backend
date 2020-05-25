@@ -37,13 +37,16 @@ class PageController extends Controller
 
     /**
      * @param  \App\Http\Requests\StorePage  $request
+     * @param  \App\Models\Course  $course
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function store(StorePage $request): JsonResponse
+    public function store(StorePage $request, Course $course): JsonResponse
     {
-        $success = $this->repository->save($request->validated());
+        $success = $this->repository->save(array_merge($request->validated(), [
+            'course_id' => $course->id
+        ]));
 
         return $this->response(compact($success), $this->getStatusCode($success));
     }

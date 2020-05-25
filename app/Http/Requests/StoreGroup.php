@@ -19,7 +19,7 @@ class StoreGroup extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required'
+            'name' => 'required|string|min:2|max:191'
         ];
     }
 }

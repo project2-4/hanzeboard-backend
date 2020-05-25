@@ -19,7 +19,9 @@ class StorePage extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required'
+            'name' => 'required|string|min:2|max:191',
+            'content' => 'required|string|min:2',
+            'parent_page_id' => 'nullable|exists:pages,id'
         ];
     }
 }

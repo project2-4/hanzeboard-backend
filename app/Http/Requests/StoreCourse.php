@@ -19,7 +19,8 @@ class StoreCourse extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required'
+            'name' => 'required|string|min:2|max:191',
+            'is_public' => 'required|boolean'
         ];
     }
 }
