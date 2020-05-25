@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -33,41 +34,63 @@ trait HasLinks
      */
     private function getLinks(): array
     {
-        $url = URL::to('/') . Route::getCurrentRoute()->getCompiled()->getStaticPrefix();
         $links = [];
 
-        foreach ($this->getRoutes() as $route => $method) {
-            $newLink = [
-                'url' => $url . '/' . $route,
-                'method' => $method
-            ];
+        if (count($segments = explode('.', Route::currentRouteName())) === 2) {
+            $resource = $segments[0];
+            $currentAction = $segments[1];
 
-            if (in_array($route, $this->getRoutesWithId())) {
-                $newLink['url'] .= '/' . implode("", Route::getCurrentRoute()->parameters());
+            $routes = $this->getDefaultRoutes();
+
+            if (!$this->actionRequiresId($currentAction)) {
+                $routes = Arr::except($routes, $this->getActionsWithId());
             }
 
-            $links[] = $newLink;
+            foreach ($routes as $action => $method) {
+                if ($currentAction === $action) {
+                    continue;
+                }
+
+                $parameters = Route::getCurrentRoute()->parameters();
+
+                if (!$this->actionRequiresId($action) && $this->actionRequiresId($currentAction)) {
+                    end($parameters);
+                    Arr::forget($parameters, key($parameters));
+                }
+
+                $url = route("{$resource}.{$action}", $parameters);
+
+                $links[$action] = ['url' => $url, 'method' => $method];
+            }
         }
 
         return $links;
     }
 
     /**
-     * @return array|string[]
+     * @return array|\string[][]
      */
-    public function getRoutes(): array
+    public function getDefaultRoutes(): array
     {
         return  [
             'index' => 'GET',
+            'store' => 'POST',
+            'destroy' => 'DELETE',
             'show' => 'GET',
-            'create' => 'GET',
-            'edit' => 'GET',
-            'destroy' => 'DESTROY'
+            'update' => 'PUT'
         ];
     }
 
-    public function getRoutesWithId(): array
+    public function actionRequiresId(string $action)
     {
-        return ['show', 'edit', 'destroy'];
+        return in_array($action, $this->getActionsWithId());
+    }
+
+    /**
+     * @return array|\string[][]
+     */
+    private function getActionsWithId(): array
+    {
+        return ['destroy', 'show', 'update'];
     }
 }

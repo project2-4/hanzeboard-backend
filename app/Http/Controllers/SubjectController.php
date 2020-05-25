@@ -53,11 +53,12 @@ class SubjectController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
      * @param  \App\Models\Subject  $subject
      *
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Subject $subject): JsonResponse
+    public function show(Course $course, Subject $subject): JsonResponse
     {
         return $this->response($subject, 200);
     }

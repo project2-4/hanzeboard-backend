@@ -57,11 +57,13 @@ class AssignmentController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Subject  $subject
      * @param  \App\Models\Assignment  $assignment
      *
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Assignment $assignment): JsonResponse
+    public function show(Course $course, Subject $subject, Assignment $assignment): JsonResponse
     {
         return $this->response($assignment, 200);
     }
