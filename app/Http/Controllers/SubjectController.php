@@ -65,12 +65,13 @@ class SubjectController extends Controller
 
     /**
      * @param  \App\Http\Requests\StoreSubject  $request
+     * @param  \App\Models\Course  $course
      * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function update(StoreSubject $request, Subject $subject): JsonResponse
+    public function update(StoreSubject $request, Course $course, Subject $subject): JsonResponse
     {
         [$success, $id] = $this->repository->save($request->validated(), $subject);
 
@@ -78,12 +79,13 @@ class SubjectController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
      * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function destroy(Subject $subject): JsonResponse
+    public function destroy(Course $course, Subject $subject): JsonResponse
     {
         $success = $this->repository->delete($subject);
 

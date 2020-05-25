@@ -52,23 +52,25 @@ class PageController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
      * @param  \App\Models\Page  $page
      *
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Page $page): JsonResponse
+    public function show(Course $course, Page $page): JsonResponse
     {
         return $this->response($page, 200);
     }
 
     /**
      * @param  \App\Http\Requests\StorePage  $request
+     * @param  \App\Models\Course  $course
      * @param  \App\Models\Page  $page
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function update(StorePage $request, Page $page): JsonResponse
+    public function update(StorePage $request, Course $course, Page $page): JsonResponse
     {
         [$success, $id] = $this->repository->save($request->validated(), $page);
 
@@ -76,12 +78,13 @@ class PageController extends Controller
     }
 
     /**
+     * @param  \App\Models\Course  $course
      * @param  \App\Models\Page  $page
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function destroy(Page $page): JsonResponse
+    public function destroy(Course $course, Page $page): JsonResponse
     {
         $success = $this->repository->delete($page);
 
