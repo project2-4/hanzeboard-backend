@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAssignment;
 use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -39,13 +40,18 @@ class AssignmentController extends Controller
 
     /**
      * @param  \App\Http\Requests\StoreAssignment  $request
+     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Subject  $subject
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function store(StoreAssignment $request): JsonResponse
+    public function store(StoreAssignment $request, Course $course, Subject $subject): JsonResponse
     {
-        $success = $this->repository->save($request->validated());
+        $success = $this->repository->save(array_merge($request->validated(), [
+            'subject' => $subject->id,
+            'deadline' => Carbon::createFromFormat('Y-m-d', $request->get('deadline'))
+        ]));
 
         return $this->response(compact($success), $this->getStatusCode($success));
     }
@@ -62,25 +68,35 @@ class AssignmentController extends Controller
 
     /**
      * @param  \App\Http\Requests\StoreAssignment  $request
+     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Subject  $subject
      * @param  \App\Models\Assignment  $assignment
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function update(StoreAssignment $request, Assignment $assignment): JsonResponse
-    {
-        $success = $this->repository->save($request->validated(), $assignment);
+    public function update(
+        StoreAssignment $request,
+        Course $course,
+        Subject $subject,
+        Assignment $assignment
+    ): JsonResponse {
+        $success = $this->repository->save(array_merge($request->validated(), [
+            'deadline' => Carbon::createFromFormat('Y-m-d', $request->get('deadline'))
+        ]), $assignment);
 
         return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
+     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Subject  $subject
      * @param  \App\Models\Assignment  $assignment
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function destroy(Assignment $assignment): JsonResponse
+    public function destroy(Course $course, Subject $subject,Assignment $assignment): JsonResponse
     {
         $success = $this->repository->delete($assignment);
 

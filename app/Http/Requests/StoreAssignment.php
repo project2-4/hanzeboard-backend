@@ -19,7 +19,10 @@ class StoreAssignment extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required'
+            'name' => 'required|string|min:2|max:191',
+            'type' => 'required|string|in:MC,open|mixed',
+            'credits' => 'required|int|between:0,60',
+            'deadline' => 'required|date|date_format:Y-m-d|after:now'
         ];
     }
 }
