@@ -42,7 +42,7 @@ class RoleController extends Controller
     {
         $success = $this->repository->save($request->validated());
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -66,7 +66,7 @@ class RoleController extends Controller
     {
         $success = $this->repository->save($request->validated(), $role);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -79,6 +79,6 @@ class RoleController extends Controller
     {
         $success = $this->repository->delete($role);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }

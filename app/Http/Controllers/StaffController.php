@@ -50,7 +50,7 @@ class StaffController extends Controller
     {
         $success = $this->repository->save($request->validated());
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -64,7 +64,7 @@ class StaffController extends Controller
     {
         $success = $this->repository->save($request->validated(), $student);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -77,6 +77,6 @@ class StaffController extends Controller
     {
         $success = $this->repository->delete($student);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }

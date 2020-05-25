@@ -53,7 +53,7 @@ class AssignmentController extends Controller
             'deadline' => Carbon::createFromFormat('Y-m-d', $request->get('deadline'))
         ]));
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -87,7 +87,7 @@ class AssignmentController extends Controller
             'deadline' => Carbon::createFromFormat('Y-m-d', $request->get('deadline'))
         ]), $assignment);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -102,6 +102,6 @@ class AssignmentController extends Controller
     {
         $success = $this->repository->delete($assignment);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }

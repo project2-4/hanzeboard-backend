@@ -52,7 +52,7 @@ class CourseController extends Controller
     {
         $success = $this->repository->save($request->validated());
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -76,7 +76,7 @@ class CourseController extends Controller
     {
         $success = $this->repository->save($request->validated(), $course);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -89,6 +89,6 @@ class CourseController extends Controller
     {
         $success = $this->repository->delete($course);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }

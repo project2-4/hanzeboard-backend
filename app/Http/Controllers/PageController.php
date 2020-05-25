@@ -48,7 +48,7 @@ class PageController extends Controller
             'course_id' => $course->id
         ]));
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -72,7 +72,7 @@ class PageController extends Controller
     {
         $success = $this->repository->save($request->validated(), $page);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -85,6 +85,6 @@ class PageController extends Controller
     {
         $success = $this->repository->delete($page);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }

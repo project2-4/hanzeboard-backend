@@ -50,7 +50,7 @@ class AnnouncementController extends Controller
             'course_id' => $course->id
         ]));
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -74,7 +74,7 @@ class AnnouncementController extends Controller
     {
         $success = $this->repository->save($request->validated(), $announcement);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -87,6 +87,6 @@ class AnnouncementController extends Controller
     {
         $success = $this->repository->delete($announcement);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }

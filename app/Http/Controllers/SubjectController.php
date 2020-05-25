@@ -49,7 +49,7 @@ class SubjectController extends Controller
             'course_id' => $course->id
         ]));
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -74,7 +74,7 @@ class SubjectController extends Controller
     {
         $success = $this->repository->save($request->validated(), $subject);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -87,6 +87,6 @@ class SubjectController extends Controller
     {
         $success = $this->repository->delete($subject);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }

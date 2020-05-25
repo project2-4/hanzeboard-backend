@@ -56,7 +56,7 @@ class GroupController extends Controller
     {
         $success = $this->repository->save($request->validated());
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -80,7 +80,7 @@ class GroupController extends Controller
     {
         $success = $this->repository->save($request->validated(), $group);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
     /**
@@ -93,6 +93,6 @@ class GroupController extends Controller
     {
         $success = $this->repository->delete($group);
 
-        return $this->response(compact($success), $this->getStatusCode($success));
+        return $this->response(compact('success'), $this->getStatusCode($success));
     }
 }
