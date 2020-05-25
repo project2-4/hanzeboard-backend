@@ -27,10 +27,6 @@ class Student extends User
         return $this->belongsTo(Group::class, 'group_id');
     }
 
-    public function getUser()
-    {
-        return $this->user();
-    }
     /**
      * @return MorphOne
      */
