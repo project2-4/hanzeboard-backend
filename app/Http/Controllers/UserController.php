@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ApiInterface;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 
-class UserController extends Controller implements ApiInterface
+class UserController extends Controller
 {
     /**
      * @return JsonResponse

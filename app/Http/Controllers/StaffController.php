@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ApiInterface;
 use App\Models\Staff;
 use Illuminate\Http\JsonResponse;
 
-class StaffController extends Controller implements ApiInterface
+class StaffController extends Controller
 {
     /**
      * @return JsonResponse

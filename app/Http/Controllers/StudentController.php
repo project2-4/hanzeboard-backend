@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUser;
-use App\Interfaces\ApiInterface;
 use App\Models\Student;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\URL;
 
-class StudentController extends Controller implements ApiInterface
+class StudentController extends Controller
 {
     /**
      * @return JsonResponse
@@ -23,34 +21,17 @@ class StudentController extends Controller implements ApiInterface
     }
 
     /**
-     * @param int $id
+     * @param  \App\Models\Student  $student
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(int $id)
+    public function show(Student $student)
     {
         $extraLinks = [
-            URL::to('/') . 'api/user/show/' . $id => 'GET'
+            URL::to('/') . 'api/user/show/' . $student->id => 'GET'
         ];
 
-        return $this->response(Student::find($id), 200, $extraLinks);
-    }
-
-    /**
-     * @param Request $request
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
-    public function edit(Request $request, int $id)
-    {
-        $student = Student::find($id);
-        $content = json_decode($request->getContent(), true);
-
-        //TODO: Update student here with request content
-        $student->save();
-
-        return response()->json($student);
+        return $this->response($student, 200, $extraLinks);
     }
 
     /**
@@ -58,7 +39,7 @@ class StudentController extends Controller implements ApiInterface
      *
      * @return JsonResponse
      */
-    public function create(StoreUser $request)
+    public function store(StoreUser $request)
     {
         if (!$content = $request->getContent()) {
             return $this->response("Invalid request", 400);
@@ -95,6 +76,23 @@ class StudentController extends Controller implements ApiInterface
         }
 
         return $this->response($user);
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function update(Request $request, int $id)
+    {
+        $student = Student::find($id);
+        $content = json_decode($request->getContent(), true);
+
+        //TODO: Update student here with request content
+        $student->save();
+
+        return response()->json($student);
     }
 
     /**
