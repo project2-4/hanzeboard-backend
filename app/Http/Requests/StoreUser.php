@@ -26,12 +26,13 @@ class StoreUser extends FormRequest
             'email' => ['required', 'email'],
             'last_name' => 'required|string|min:2|max:191',
             'avatar_url' => 'nullable|string|min:2|max:191',
-            'password' => 'required|confirmed|min:8|max:191',
             'role_id' => 'required|exists:roles,id'
         ];
 
         if (request()->method() !== 'POST') {
             $rules['email'][] = Rule::unique('users', 'id')->ignore(Auth::user()->id);
+        } else {
+            $rules['password'] = 'required|confirmed|min:8|max:191';
         }
 
         return $rules;
