@@ -40,14 +40,14 @@ abstract class Repository
      * @param  array  $data
      * @param  \Illuminate\Database\Eloquent\Model|null  $model
      *
-     * @return bool
+     * @return array
      * @throws \Throwable
      */
-    public function save(array $data, Model $model = null): bool
+    public function save(array $data, Model $model = null): array
     {
-        return DB::transaction(function () use ($data, $model) {
+        return [DB::transaction(function () use ($data, $model) {
             return $this->fill($data, $model);
-        });
+        }), $this->getModel()->id];
     }
 
     /**

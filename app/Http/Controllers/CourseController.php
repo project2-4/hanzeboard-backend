@@ -50,9 +50,10 @@ class CourseController extends Controller
      */
     public function store(StoreCourse $request): JsonResponse
     {
-        $success = $this->repository->save($request->validated());
+        [$success, $id] = $this->repository->save($request->validated());
+        $id = $this->repository->getModel()->id;
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
@@ -74,9 +75,9 @@ class CourseController extends Controller
      */
     public function update(StoreCourse $request, Course $course): JsonResponse
     {
-        $success = $this->repository->save($request->validated(), $course);
+        [$success, $id] = $this->repository->save($request->validated(), $course);
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**

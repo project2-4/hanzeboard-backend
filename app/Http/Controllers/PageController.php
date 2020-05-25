@@ -44,11 +44,11 @@ class PageController extends Controller
      */
     public function store(StorePage $request, Course $course): JsonResponse
     {
-        $success = $this->repository->save(array_merge($request->validated(), [
+        [$success, $id] = $this->repository->save(array_merge($request->validated(), [
             'course_id' => $course->id
         ]));
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
@@ -70,9 +70,9 @@ class PageController extends Controller
      */
     public function update(StorePage $request, Page $page): JsonResponse
     {
-        $success = $this->repository->save($request->validated(), $page);
+        [$success, $id] = $this->repository->save($request->validated(), $page);
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**

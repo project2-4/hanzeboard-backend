@@ -54,9 +54,9 @@ class GroupController extends Controller
      */
     public function store(StoreGroup $request): JsonResponse
     {
-        $success = $this->repository->save($request->validated());
+        [$success, $id] = $this->repository->save($request->validated());
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
@@ -78,9 +78,9 @@ class GroupController extends Controller
      */
     public function update(StoreGroup $request, Group $group): JsonResponse
     {
-        $success = $this->repository->save($request->validated(), $group);
+        [$success, $id] = $this->repository->save($request->validated(), $group);
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**

@@ -48,9 +48,9 @@ class StaffController extends Controller
      */
     public function store(StoreStaff $request): JsonResponse
     {
-        $success = $this->repository->save($request->validated());
+        [$success, $id] = $this->repository->save($request->validated());
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
@@ -62,9 +62,9 @@ class StaffController extends Controller
      */
     public function update(StoreStaff $request, Staff $student): JsonResponse
     {
-        $success = $this->repository->save($request->validated(), $student);
+        [$success, $id] = $this->repository->save($request->validated(), $student);
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**

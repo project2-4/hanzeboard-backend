@@ -48,12 +48,12 @@ class AssignmentController extends Controller
      */
     public function store(StoreAssignment $request, Course $course, Subject $subject): JsonResponse
     {
-        $success = $this->repository->save(array_merge($request->validated(), [
+        [$success, $id] = $this->repository->save(array_merge($request->validated(), [
             'subject' => $subject->id,
             'deadline' => Carbon::createFromFormat('Y-m-d', $request->get('deadline'))
         ]));
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
@@ -83,11 +83,11 @@ class AssignmentController extends Controller
         Subject $subject,
         Assignment $assignment
     ): JsonResponse {
-        $success = $this->repository->save(array_merge($request->validated(), [
+        [$success, $id] = $this->repository->save(array_merge($request->validated(), [
             'deadline' => Carbon::createFromFormat('Y-m-d', $request->get('deadline'))
         ]), $assignment);
 
-        return $this->response(compact('success'), $this->getStatusCode($success));
+        return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
