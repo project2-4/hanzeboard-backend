@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StoreUser
@@ -18,8 +19,9 @@ class StoreStudent extends FormRequest
      */
     public function rules()
     {
-        return array_merge(StoreUser::$rules, [
-
+        return array_merge(StoreUser::rules(), [
+            'student_number' => 'required|min:0',
+            'group_id' => 'nullable|exists:groups,id'
         ]);
     }
 }

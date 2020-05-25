@@ -18,8 +18,10 @@ class StoreStaff extends FormRequest
      */
     public function rules()
     {
-        return array_merge(StoreUser::$rules, [
-
+        return array_merge(StoreUser::rules(), [
+            'abbreviation' => 'required|string|min:4|max:4',
+            'status' => 'required|string|min:1|max:255',
+            'office_location' => 'required|string|min:1|max:255',
         ]);
     }
 }
