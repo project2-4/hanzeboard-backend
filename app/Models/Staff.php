@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class Staff extends Model
 {
     /**
+     * @var string[]
+     */
+    protected $with = ['user'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function announcements(): HasMany

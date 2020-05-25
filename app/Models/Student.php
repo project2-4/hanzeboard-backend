@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class Student extends User
 {
     /**
+     * @var string[]
+     */
+    protected $with = ['user'];
+
+    /**
      * @return HasMany
      */
     public function grades(): HasMany
