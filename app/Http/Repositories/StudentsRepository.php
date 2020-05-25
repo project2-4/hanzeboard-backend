@@ -40,7 +40,7 @@ class StudentsRepository extends Repository
      */
     public function all(): Collection
     {
-        return $this->user->with('profile')->where('profile_type', $this->getType())->get();
+        return $this->getModel()->with('user')->get();
     }
 
     /**
@@ -53,7 +53,7 @@ class StudentsRepository extends Repository
     {
         [$userData, $studentData] = $this->splitData($data);
 
-        $success = parent::fill($studentData);
+        $success = parent::fill($studentData, $model);
 
         if (!$success) {
             throw new \RuntimeException('Invalid state: could not create a student object');

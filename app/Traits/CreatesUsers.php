@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Http\Requests\StoreUser;
+use Illuminate\Support\Arr;
 
 /**
  * Trait GeneratesLinks
@@ -38,7 +39,8 @@ trait CreatesUsers
 
         return $user->fill(array_merge($data, [
             'profile_type' => $this->getType(),
-            'profile_id' => $profileId
+            'profile_id' => $profileId,
+            'password' => bcrypt($data['password'])
         ]))->save();
     }
 

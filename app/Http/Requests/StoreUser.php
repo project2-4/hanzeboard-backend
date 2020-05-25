@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 /**
  * Class StoreUser
@@ -18,17 +20,18 @@ class StoreUser extends FormRequest
      */
     public static function rules()
     {
-        $rules = array_merge(StoreUser::$rules, [
+        $rules = [
             'first_name' => 'required|string|min:2|max:191',
             'infix' => 'nullable|string|min:2|max:191',
+            'email' => ['required', 'email'],
             'last_name' => 'required|string|min:2|max:191',
             'avatar_url' => 'nullable|string|min:2|max:191',
-            'password' => 'required|min:8|max:191',
+            'password' => 'required|confirmed|min:8|max:191',
             'role_id' => 'required|exists:roles,id'
-        ]);
+        ];
 
         if (request()->method() !== 'POST') {
-            $rules['email'] .= ',' . Auth::user()->id;
+            $rules['email'][] = Rule::unique('users', 'id')->ignore(Auth::user()->id);
         }
 
         return $rules;

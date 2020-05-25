@@ -35,7 +35,7 @@ class StaffController extends Controller
      */
     public function show(Staff $staff): JsonResponse
     {
-        return $this->response($staff, 200);
+        return $this->response($staff->load('user'), 200);
     }
 
     /**
@@ -53,27 +53,27 @@ class StaffController extends Controller
 
     /**
      * @param  \App\Http\Requests\StoreStaff  $request
-     * @param  \App\Models\Staff  $student
+     * @param  \App\Models\Staff  $staff
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function update(StoreStaff $request, Staff $student): JsonResponse
+    public function update(StoreStaff $request, Staff $staff): JsonResponse
     {
-        [$success, $id] = $this->repository->save($request->validated(), $student);
+        [$success, $id] = $this->repository->save($request->validated(), $staff);
 
         return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
     /**
-     * @param  \App\Models\Staff  $student
+     * @param  \App\Models\Staff  $staff
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function destroy(Staff $student): JsonResponse
+    public function destroy(Staff $staff): JsonResponse
     {
-        $success = $this->repository->delete($student);
+        $success = $this->repository->delete($staff);
 
         return $this->response(compact('success'), $this->getStatusCode($success));
     }

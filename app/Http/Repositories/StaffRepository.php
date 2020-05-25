@@ -43,7 +43,7 @@ class StaffRepository extends Repository
      */
     public function all(): Collection
     {
-        return $this->user->with('profile')->where('profile_type', $this->getType())->get();
+        return $this->getModel()->with('user')->get();
     }
 
     /**
@@ -56,7 +56,7 @@ class StaffRepository extends Repository
     {
         [$userData, $staffData] = $this->splitData($data);
 
-        $success = parent::fill($staffData);
+        $success = parent::fill($staffData, $model);
 
         if (!$success) {
             throw new \RuntimeException('Invalid state: could not create a staff object');

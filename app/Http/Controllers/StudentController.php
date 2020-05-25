@@ -6,7 +6,6 @@ use App\Http\Repositories\StudentsRepository;
 use App\Http\Requests\StoreStudent;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\URL;
 
 class StudentController extends Controller
 {
@@ -35,7 +34,7 @@ class StudentController extends Controller
      */
     public function show(Student $student): JsonResponse
     {
-        return $this->response($student, 200);
+        return $this->response($student->load('user'), 200);
     }
 
     /**
