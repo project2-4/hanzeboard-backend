@@ -2,13 +2,11 @@
 
 namespace App\Http\Repositories;
 
-use App\Http\Requests\StoreUser;
 use App\Models\Student;
 use App\Models\User;
 use App\Traits\CreatesUsers;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 
 /**
  * Class StudentsRepository
@@ -38,6 +36,14 @@ class StudentsRepository extends Repository
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function all(): Collection
+    {
+        return $this->user->all()->where('profile_type', $this->getType());
+    }
+
+    /**
      * @param  array  $data
      * @param  \Illuminate\Database\Eloquent\Model|null  $model
      *
@@ -61,11 +67,20 @@ class StudentsRepository extends Repository
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
+     * @return bool|null
+     * @throws \Exception
      */
-    public function all(): Collection
+    protected function destroy(Model $model): ?bool
     {
-        return $this->user->all()->where('profile_type', $this->getType());
+        $success = (bool) $model->user()->delete();
+
+        if (!$success) {
+            throw new \RuntimeException('Invalid state: could not delete a student object');
+        }
+
+        return $model->delete();
     }
 
     /**

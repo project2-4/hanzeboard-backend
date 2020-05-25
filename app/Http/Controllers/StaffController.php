@@ -2,51 +2,81 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\StaffRepository;
+use App\Http\Requests\StoreStaff;
 use App\Models\Staff;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\URL;
 
 class StaffController extends Controller
 {
     /**
-     * @return JsonResponse
-     */
-    public function index()
-    {
-        return $this->response(Staff::all(), 200);
-    }
-
-    /**
-     * @param int $id
+     * StaffController constructor.
      *
+     * @param  \App\Http\Repositories\StaffRepository  $repository
+     */
+    public function __construct(StaffRepository $repository)
+    {
+        parent::__construct($repository);
+    }
+
+    /**
      * @return JsonResponse
      */
-    public function show(int $id)
+    public function index(): JsonResponse
     {
-        return $this->response(Staff::find($id), 200);
+        return $this->response($this->repository->all(), 200);
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Models\Staff  $staff
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id)
+    public function show(Staff $staff): JsonResponse
     {
-        $success = (boolean) Staff::destroy($id);
-        return $this->response(['success' => $success], 200);
+        $extraLinks = [URL::to("/api/user/show/{$staff->id}") => 'GET'];
+
+        return $this->response($staff, 200, $extraLinks);
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Http\Requests\StoreStaff  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function create()
+    public function store(StoreStaff $request): JsonResponse
     {
-        // TODO: Implement create() method.
+        $success = $this->repository->save($request->validated());
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 
     /**
-     * @inheritDoc
+     * @param  \App\Http\Requests\StoreStaff  $request
+     * @param  \App\Models\Staff  $student
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
-    public function edit(int $id)
+    public function update(StoreStaff $request, Staff $student): JsonResponse
     {
-        // TODO: Implement edit() method.
+        $success = $this->repository->save($request->validated(), $student);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
+    }
+
+    /**
+     * @param  \App\Models\Staff  $student
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
+     */
+    public function destroy(Staff $student): JsonResponse
+    {
+        $success = $this->repository->delete($student);
+
+        return $this->response(compact($success), $this->getStatusCode($success));
     }
 }

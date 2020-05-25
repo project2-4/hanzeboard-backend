@@ -4,12 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositories\StudentsRepository;
 use App\Http\Requests\StoreStudent;
-use App\Http\Requests\StoreUser;
 use App\Models\Student;
-use App\Models\User;
-use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
 class StudentController extends Controller
