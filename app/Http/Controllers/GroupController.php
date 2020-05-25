@@ -43,7 +43,7 @@ class GroupController extends Controller
             return $this->response($student->group, 200);
         }
 
-        return $this->response(['success' => false, 'errors' => 'Staff members do not have groups'], 400);
+        return $this->response(['success' => false, 'message' => 'Staff members do not have groups'], 400);
     }
 
     /**
