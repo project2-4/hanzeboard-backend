@@ -9,16 +9,8 @@ use Illuminate\Foundation\Http\FormRequest;
  *
  * @package App\Http\Requests
  */
-class StoreUser extends FormRequest
+class StoreStudent extends FormRequest
 {
-    /**
-     * @var string[]
-     */
-    public static $rules = [
-        'first_name' => 'required',
-        'last_name'  => 'required'
-    ];
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,6 +18,8 @@ class StoreUser extends FormRequest
      */
     public function rules()
     {
-        return self::$rules;
+        return array_merge(StoreUser::$rules, [
+
+        ]);
     }
 }

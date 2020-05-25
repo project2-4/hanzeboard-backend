@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\StudentsRepository;
 use App\Http\Requests\StoreUser;
 use App\Models\Student;
 use App\Models\User;
@@ -13,11 +14,21 @@ use Illuminate\Support\Facades\URL;
 class StudentController extends Controller
 {
     /**
+     * StudentController constructor.
+     *
+     * @param  \App\Http\Repositories\StudentsRepository  $repository
+     */
+    public function __construct(StudentsRepository $repository)
+    {
+        parent::__construct($repository);
+    }
+
+    /**
      * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return $this->response(User::all()->where('profile_type', '=', 'student'), 200);
+        return $this->response($this->repository->all(), 200);
     }
 
     /**
@@ -39,7 +50,7 @@ class StudentController extends Controller
      *
      * @return JsonResponse
      */
-    public function store(StoreUser $request)
+    public function store(StoreStudent $request)
     {
         if (!$content = $request->getContent()) {
             return $this->response("Invalid request", 400);
