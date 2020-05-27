@@ -2,9 +2,11 @@
 
 namespace App\Http\Repositories;
 
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 /**
  * Class Repository
@@ -21,7 +23,7 @@ abstract class Repository
     /**
      * Repository constructor.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      */
     protected function __construct(Model $model)
     {
@@ -29,7 +31,7 @@ abstract class Repository
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function all(): Collection
     {
@@ -38,10 +40,10 @@ abstract class Repository
 
     /**
      * @param  array  $data
-     * @param  \Illuminate\Database\Eloquent\Model|null  $model
+     * @param Model|null  $model
      *
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function save(array $data, Model $model = null): array
     {
@@ -51,10 +53,10 @@ abstract class Repository
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      *
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function delete(Model $model): bool
     {
@@ -64,7 +66,7 @@ abstract class Repository
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function getModel(): Model
     {
@@ -73,7 +75,7 @@ abstract class Repository
 
     /**
      * @param  array  $data
-     * @param  \Illuminate\Database\Eloquent\Model|null  $model
+     * @param Model|null  $model
      *
      * @return bool
      */
@@ -85,10 +87,10 @@ abstract class Repository
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      *
      * @return bool|null
-     * @throws \Exception
+     * @throws Exception
      */
     protected function destroy(Model $model): ?bool
     {

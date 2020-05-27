@@ -34,75 +34,45 @@ Route::group(['middleware' => 'api'], function () {
     | Authentication required
     |--------------------------------------------------------------------------
     */
-    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
-        /*
-        |--------------------------------------------------------------------------
-        | Courses
-        |--------------------------------------------------------------------------
-        */
+    Route::group(['middleware' => ['auth:api']], function () {
+
+        /** Courses */
         Route::get('courses/all', 'CourseController@all')->name('courses.all');
         Route::apiResource('courses', 'CourseController');
 
         Route::group(['prefix' => 'courses/{course}'], function () {
             Route::get('staff', 'CourseController@staff')->name('courses.staff');
-            /*
-            |--------------------------------------------------------------------------
-            | Announcements
-            |--------------------------------------------------------------------------
-            */
+
+            /** Announcements */
             Route::apiResource('announcements', 'AnnouncementController');
 
-            /*
-            |--------------------------------------------------------------------------
-            | Pages
-            |--------------------------------------------------------------------------
-            */
+            /** Pages */
             Route::apiResource('pages', 'PageController');
 
-            /*
-            |--------------------------------------------------------------------------
-            | Subjects
-            |--------------------------------------------------------------------------
-            */
+            /** subjects */
             Route::apiResource('subjects', 'SubjectController');
 
             Route::group(['prefix' => 'subjects/{subject}'], function () {
-                /*
-                |--------------------------------------------------------------------------
-                | Assignments
-                |--------------------------------------------------------------------------
-                */
+
+                /** Assignments */
                 Route::apiResource('assignments', 'AssignmentController');
             });
         });
 
-        /*
-        |--------------------------------------------------------------------------
-        | Students
-        |--------------------------------------------------------------------------
-        */
+        /** Students */
         Route::apiResource('students', 'StudentController');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Staff
-        |--------------------------------------------------------------------------
-        */
+        /** Staff */
         Route::apiResource('staff', 'StaffController');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Roles
-        |--------------------------------------------------------------------------
-        */
+        /** Roles */
         Route::apiResource('roles', 'RoleController');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Groups
-        |--------------------------------------------------------------------------
-        */
+        /** Groups */
         Route::get('groups/me', 'GroupController@me');
         Route::apiResource('groups', 'GroupController');
+
+        /** Grades */
+        Route::apiResource('grades', 'GradesController');
     });
 });

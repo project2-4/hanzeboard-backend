@@ -6,13 +6,14 @@ use App\Http\Repositories\StudentsRepository;
 use App\Http\Requests\StoreStudent;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class StudentController extends Controller
 {
     /**
      * StudentController constructor.
      *
-     * @param  \App\Http\Repositories\StudentsRepository  $repository
+     * @param StudentsRepository $repository
      */
     public function __construct(StudentsRepository $repository)
     {
@@ -28,9 +29,9 @@ class StudentController extends Controller
     }
 
     /**
-     * @param  \App\Models\Student  $student
+     * @param Student $student
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show(Student $student): JsonResponse
     {
@@ -38,10 +39,10 @@ class StudentController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\StoreStudent  $request
+     * @param StoreStudent $request
      *
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Throwable
+     * @return JsonResponse
+     * @throws Throwable
      */
     public function store(StoreStudent $request): JsonResponse
     {
@@ -51,11 +52,11 @@ class StudentController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\StoreStudent  $request
-     * @param  \App\Models\Student  $student
+     * @param StoreStudent $request
+     * @param Student $student
      *
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Throwable
+     * @return JsonResponse
+     * @throws Throwable
      */
     public function update(StoreStudent $request, Student $student): JsonResponse
     {
@@ -65,10 +66,10 @@ class StudentController extends Controller
     }
 
     /**
-     * @param  \App\Models\Student  $student
+     * @param Student $student
      *
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Throwable
+     * @return JsonResponse
+     * @throws Throwable
      */
     public function destroy(Student $student): JsonResponse
     {
