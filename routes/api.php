@@ -34,7 +34,7 @@ Route::group(['middleware' => 'api'], function () {
     | Authentication required
     |--------------------------------------------------------------------------
     */
-    Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
 
         /** Courses */
         Route::get('courses/all', 'CourseController@all')->name('courses.all');
