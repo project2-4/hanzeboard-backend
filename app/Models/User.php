@@ -46,6 +46,13 @@ class User extends Model implements
     ];
 
     /**
+     * @var string[]
+     */
+    protected $appends = [
+        'full_name'
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role(): BelongsTo
@@ -86,6 +93,14 @@ class User extends Model implements
             'role' => $this->role,
             'profile' => $this->profile_type
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . (is_null($this->infix) ? '' : ' ') . $this->infix . ' ' . $this->last_name;
     }
 
     /**
