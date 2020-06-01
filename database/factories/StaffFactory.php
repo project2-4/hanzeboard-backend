@@ -9,6 +9,7 @@ $factory->define(Staff::class, function (Faker $faker) {
     return [
         'abbreviation' => strtoupper(Str::random(4)),
         'status' => 'default',
-        'office_location' => $faker->lexify('Zernikeplein 11 ?.###')
+        'office_location' => $faker->lexify('Zernikeplein 11 ?.###'),
+        'staff_status_id' => factory(\App\Models\StaffStatus::class)
     ];
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStaffTable extends Migration
+class CreateStaffStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreateStaffTable extends Migration
      */
     public function up()
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('staff_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('abbreviation');
-            $table->string('status')->nullable();
-            $table->string('office_location')->nullable();
-            $table->foreignId('staff_status_id')
-                ->constrained('staff_statuses')
-                ->onDelete('cascade');
-
+            $table->string('status');
+            $table->dateTime('until');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ class CreateStaffTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('staff_statuses');
     }
 }

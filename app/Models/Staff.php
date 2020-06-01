@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
@@ -32,5 +33,13 @@ class Staff extends Model
     public function user(): MorphOne
     {
         return $this->morphOne(User::class, 'profile');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function status(): HasOne
+    {
+        return $this->hasOne(StaffStatus::class);
     }
 }
