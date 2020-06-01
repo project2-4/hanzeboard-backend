@@ -33,7 +33,7 @@ class AnnouncementController extends Controller
      */
     public function index(Course $course): JsonResponse
     {
-        return $this->response($course->subjects, 200);
+        return $this->response($course->load('announcements.poster.user')->announcements, 200);
     }
 
     /**
