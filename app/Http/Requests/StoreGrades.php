@@ -22,8 +22,7 @@ class StoreGrades extends FormRequest
     {
         return [
             'grades' => 'required|file',
-            'assignment' => 'required|int',
-            'assigner' => 'required|int'
+            'assignment' => 'required|int'
         ];
     }
 }
