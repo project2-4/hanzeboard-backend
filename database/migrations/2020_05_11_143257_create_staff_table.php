@@ -16,7 +16,6 @@ class CreateStaffTable extends Migration
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
             $table->string('abbreviation');
-            $table->string('status')->nullable();
             $table->string('office_location')->nullable();
             $table->foreignId('staff_status_id')
                 ->constrained('staff_statuses')

@@ -11,6 +11,11 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class StoreStaff extends FormRequest
 {
+    const STATUS_RULES = [
+        'status' => 'in:available,leave,sick',
+        'until' => 'date|date_format:Y-m-d'
+    ];
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -20,8 +25,12 @@ class StoreStaff extends FormRequest
     {
         return array_merge(StoreUser::rules(), [
             'abbreviation' => 'required|string|min:4|max:4',
-            'status' => 'required|string|min:1|max:255',
-            'office_location' => 'required|string|min:1|max:255',
-        ]);
+            'office_location' => 'required|string|min:1|max:255'
+        ],  self::STATUS_RULES);
+    }
+
+    public static function statusRules()
+    {
+        return self::STATUS_RULES;
     }
 }

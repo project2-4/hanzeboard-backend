@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @method static find(int $id)
  * @method static where(string $string, $id)
+ * @method static create(array $staffStatusData)
  */
 class StaffStatus extends Model
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasOne
      */
-    public function announcements(): HasMany
+    public function staff(): HasOne
     {
-        return $this->hasMany(Announcement::class, 'posted_by');
+        return $this->hasOne(Staff::class, 'staff_status_id');
     }
 }

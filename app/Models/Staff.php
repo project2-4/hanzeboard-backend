@@ -35,11 +35,8 @@ class Staff extends Model
         return $this->morphOne(User::class, 'profile');
     }
 
-    /**
-     * @return HasOne
-     */
-    public function status(): HasOne
+    public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(StaffStatus::class);
+        return $this->belongsTo(StaffStatus::class, 'staff_status_id');
     }
 }

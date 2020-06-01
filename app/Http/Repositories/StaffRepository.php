@@ -2,8 +2,10 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Requests\StoreStaff;
 use App\Http\Requests\StoreUser;
 use App\Models\Staff;
+use App\Models\StaffStatus;
 use App\Models\Student;
 use App\Models\User;
 use App\Traits\CreatesUsers;
@@ -56,6 +58,11 @@ class StaffRepository extends Repository
     {
         [$userData, $staffData] = $this->splitData($data);
 
+        $staffStatusData = Arr::only($data, array_keys(StoreStaff::statusRules()));
+        $staffData = Arr::except($staffData, array_keys(StoreStaff::statusRules()));
+        $staffStatus = $this->createOrUpdateStaffStatus($staffStatusData, $model);
+        if (!$model) $staffData['staff_status_id'] = $staffStatus->id;
+
         $success = parent::fill($staffData, $model);
 
         if (!$success) {
@@ -92,5 +99,23 @@ class StaffRepository extends Repository
     protected function getType()
     {
         return 'staff';
+    }
+
+    /**
+     * @param array      $staffStatusData
+     * @param Model|null $model
+     *
+     * @return mixed
+     */
+    private function createOrUpdateStaffStatus(array $staffStatusData, ?Model $model = null): StaffStatus
+    {
+        if ($model) {
+            $staffStatus = StaffStatus::where('id', $model->staff_status_id);
+            $staffStatus->update($staffStatusData);
+
+            return $staffStatus;
+        }
+
+        return StaffStatus::create($staffStatusData);
     }
 }

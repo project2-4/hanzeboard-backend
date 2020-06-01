@@ -35,7 +35,7 @@ class StaffController extends Controller
      */
     public function show(Staff $staff): JsonResponse
     {
-        return $this->response($staff->load('user'), 200);
+        return $this->response($staff->load(['user', 'status']), 200);
     }
 
     /**
