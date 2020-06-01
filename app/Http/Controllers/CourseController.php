@@ -102,6 +102,6 @@ class CourseController extends Controller
     {
         $staff = $course->users()->where('profile_type', 'staff')->with('profile')->get();
 
-        return $this->response(compact('staff'), 200);
+        return $this->response($staff, 200);
     }
 }
