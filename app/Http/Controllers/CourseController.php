@@ -31,7 +31,7 @@ class CourseController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->response(Auth::user()->courses, 200);
+        return $this->response(Auth::user()->courses->load('subjects'), 200);
     }
 
     /**
@@ -62,7 +62,7 @@ class CourseController extends Controller
      */
     public function show(Course $course): JsonResponse
     {
-        return $this->response($course, 200);
+        return $this->response($course->load('subjects'), 200);
     }
 
     /**
@@ -100,7 +100,11 @@ class CourseController extends Controller
      */
     public function staff(Course $course): JsonResponse
     {
-        $staff = $course->users()->where('profile_type', 'staff')->with('profile')->get();
+        $staff = $course
+            ->users()
+            ->where('profile_type', 'staff')
+            ->with('profile')
+            ->get();
 
         return $this->response($staff, 200);
     }

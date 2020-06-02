@@ -32,6 +32,10 @@ class GradesController extends Controller
         return $this->response($this->repository->all(), 200);
     }
 
+    /**
+     * @param StoreGrades $request
+     * @return JsonResponse
+     */
     public function store(StoreGrades $request): JsonResponse
     {
         $filename = $request->file('grades')->path();
@@ -44,7 +48,7 @@ class GradesController extends Controller
 
         foreach ($grades as $grade) {
             try {
-                $student = Student::find($grade[0]);
+                $student = Student::where('student_number', '=', $grade[0]);
                 $grade = (float) $grade[1];
 
                 $savedGrades[] = $this->repository->newGrade($student, $assignment, $assigner, $grade);

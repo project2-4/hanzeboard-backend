@@ -29,7 +29,7 @@ class CoursesRepository extends Repository
     public function getPublicCourses(): Collection
     {
         if (Auth::user()->isStaff()) {
-            return $this->model->all();
+            return $this->model->all()->load('subjects');
         }
 
         return $this->model->where('is_public', true)->get();

@@ -35,7 +35,7 @@ class StudentController extends Controller
      */
     public function show(Student $student): JsonResponse
     {
-        return $this->response($student->load('user'), 200);
+        return $this->response($student->load(['user', 'grades']), 200);
     }
 
     /**

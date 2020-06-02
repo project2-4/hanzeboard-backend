@@ -25,7 +25,7 @@ class StaffController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->response($this->repository->all(), 200);
+        return $this->response($this->repository->all()->load(['user', 'status']), 200);
     }
 
     /**

@@ -59,20 +59,24 @@ Route::group(['middleware' => 'api'], function () {
             });
         });
 
-        /** Students */
-        Route::apiResource('students', 'StudentController');
-
-        /** Staff */
-        Route::apiResource('staff', 'StaffController');
-
         /** Roles */
         Route::apiResource('roles', 'RoleController');
+
+        /** Students */
+        Route::apiResource('students', 'StudentController');
 
         /** Groups */
         Route::get('groups/me', 'GroupController@me');
         Route::apiResource('groups', 'GroupController');
 
-        /** Grades */
-        Route::apiResource('grades', 'GradesController');
+        /** Admin Authorized actions */
+        Route::group(['middleware' => ['auth.admin']], function () {
+            /** Staff */
+            Route::apiResource('staff', 'StaffController');
+            Route::put('staff/{staff}/status', 'StaffStatusController@update');
+
+            /** Grades */
+            Route::apiResource('grades', 'GradesController@index');
+        });
     });
 });
