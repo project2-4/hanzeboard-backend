@@ -65,6 +65,9 @@ Route::group(['middleware' => 'api'], function () {
         /** Students */
         Route::apiResource('students', 'StudentController');
 
+        /** Grades */
+        Route::apiResource('grades', 'GradesController');
+
         /** Groups */
         Route::get('groups/me', 'GroupController@me');
         Route::apiResource('groups', 'GroupController');
@@ -75,8 +78,6 @@ Route::group(['middleware' => 'api'], function () {
             Route::apiResource('staff', 'StaffController');
             Route::put('staff/{staff}/status', 'StaffStatusController@update');
 
-            /** Grades */
-            Route::apiResource('grades', 'GradesController@index');
         });
     });
 });
