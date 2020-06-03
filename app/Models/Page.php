@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @method static find(int $id)
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Page extends Model
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function items(): HasMany
     {
@@ -19,11 +20,11 @@ class Page extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return HasOne
      */
-    public function course(): BelongsTo
+    public function subject(): HasOne
     {
-        return $this->belongsTo(Course::class, 'course_id');
+        return $this->hasOne(Subject::class, 'page_id');
     }
 
     /**
@@ -35,7 +36,7 @@ class Page extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function parent(): BelongsTo
     {

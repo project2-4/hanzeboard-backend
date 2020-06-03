@@ -22,11 +22,14 @@ class CreatePagesTable extends Migration
                 ->nullable()
                 ->constrained('pages')
                 ->onDelete('restrict');
-            $table->foreignId('course_id')
-                ->constrained('courses')
-                ->onDelete('restrict');
 
             $table->timestamps();
+        });
+
+        Schema::table('subjects', function (Blueprint $table) {
+            $table->foreignId('page_id')
+                ->constrained('pages')
+                ->onDelete('restrict');
         });
     }
 

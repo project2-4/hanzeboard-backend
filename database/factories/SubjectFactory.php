@@ -1,13 +1,15 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/** @var Factory $factory */
 
+use App\Models\Page;
 use App\Models\Subject;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Subject::class, function (Faker $faker) {
     return [
         'name' => implode(' ', $faker->words(5)),
-        //'course_id' => factory(\App\Models\Course::class)
+        'page_id' => factory(Page::class)
     ];
 });

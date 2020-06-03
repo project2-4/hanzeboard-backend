@@ -9,7 +9,6 @@ $factory->define(Page::class, function (Faker $faker) {
     return [
         'name' => $faker->sentence(6, true),
         'content' => $faker->paragraph(5, true),
-        'parent_page_id' => null,
-        //'course_id' => factory(\App\Models\Course::class)
+        'parent_page_id' => null
     ];
 });
