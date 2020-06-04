@@ -40,6 +40,19 @@ abstract class Controller extends BaseController
      */
     public function getStatusCode(bool $success): int
     {
-        return $success ? 200 : 400;
+        if (!$success) {
+            return 400;
+        }
+
+        switch (request()->method()) {
+            case 'POST':
+                return 201;
+            case 'PUT':
+            case 'PATCH':
+            case 'DELETE':
+                return 204;
+            default:
+                return 200;
+        }
     }
 }

@@ -33,12 +33,6 @@ class CourseSeeder extends Seeder
                 ])->toArray()
             );
 
-//            $course->pages()->createMany(
-//                factory(App\Models\Page::class, 5)->make([
-//                    'course_id' => $course->id
-//                ])->toArray()
-//            );
-
             $course->announcements()->createMany(
                 factory(App\Models\Announcement::class, 10)->make([
                     'course_id' => $course->id,

@@ -12,7 +12,7 @@ class Group extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function users(): HasMany
+    public function students(): HasMany
     {
         return $this->hasMany(Student::class, 'group_id');
     }

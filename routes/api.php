@@ -41,6 +41,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::apiResource('courses', 'CourseController');
 
         Route::group(['prefix' => 'courses/{course}'], function () {
+            Route::get('students', 'CourseController@students')->name('courses.students');
             Route::get('staff', 'CourseController@staff')->name('courses.staff');
 
             /** Announcements */

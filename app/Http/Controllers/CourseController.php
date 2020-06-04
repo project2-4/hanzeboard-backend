@@ -108,4 +108,21 @@ class CourseController extends Controller
 
         return $this->response($staff, 200);
     }
+
+    /**
+     * @param  \App\Models\Course  $course
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
+     */
+    public function students(Course $course): JsonResponse
+    {
+        $students = $course
+            ->users()
+            ->where('profile_type', 'student')
+            ->with('profile')
+            ->get();
+
+        return $this->response($students, 200);
+    }
 }
