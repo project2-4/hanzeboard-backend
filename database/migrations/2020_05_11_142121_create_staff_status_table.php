@@ -15,8 +15,8 @@ class CreateStaffStatusTable extends Migration
     {
         Schema::create('staff_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
-            $table->dateTime('until');
+            $table->string('status')->default('available');
+            $table->dateTime('until')->default('1970-01-01 00:00');
             $table->timestamps();
         });
     }
