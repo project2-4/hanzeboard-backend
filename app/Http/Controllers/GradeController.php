@@ -10,10 +10,8 @@ use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class GradesController extends Controller
+class GradeController extends Controller
 {
-    /** @var GradesRepository $repository */
-    protected $repository;
     /**
      * StudentController constructor.
      *

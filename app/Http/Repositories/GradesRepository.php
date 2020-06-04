@@ -42,7 +42,7 @@ class GradesRepository extends Repository
      */
     public function all(): Collection
     {
-        return $this->getModel()->with('user')->get();
+        return $this->getModel()->with('student.user')->get();
     }
 
     /**

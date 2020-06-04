@@ -67,7 +67,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::apiResource('students', 'StudentController');
 
         /** Grades */
-        Route::apiResource('grades', 'GradesController');
+        Route::apiResource('grades', 'GradeController');
 
         /** Groups */
         Route::get('groups/me', 'GroupController@me')->name('groups.me');
