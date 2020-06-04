@@ -4,6 +4,7 @@ namespace App\Http\Repositories;
 
 use App\Models\Course;
 use App\Models\Group;
+use App\Models\Page;
 use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
@@ -57,7 +58,7 @@ class CoursesRepository extends Repository
         $this->getModel()->users()->sync($this->getUserIds($data));
 
         if (is_null($model)) {
-           // $this->getModel()->subjects()->createMany([]);
+            $this->createSubjects($data['subjects']);
         }
 
         return true;
@@ -83,6 +84,21 @@ class CoursesRepository extends Repository
             $usersByGroup,
             $staff->pluck('user.id')->toArray(),
             $students->pluck('user.id')->toArray()
+        );
+    }
+
+    /**
+     * @param  array  $subjects
+     */
+    protected function createSubjects(array $subjects)
+    {
+        $this->getModel()->subjects()->createMany(
+            array_map(function ($subject) {
+                return [
+                    'name' => $subject,
+                    'page_id' => (Page::create(['name' => $subject, 'content' => '']))->id
+                ];
+            }, $subjects)
         );
     }
 }

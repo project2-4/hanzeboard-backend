@@ -18,7 +18,7 @@ class StoreCourse extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|string|min:2|max:191',
             'staff_ids' => 'required|array',
             'staff_ids.*' => 'exists:staff,id',
@@ -26,9 +26,14 @@ class StoreCourse extends FormRequest
             'group_ids.*' => 'exists:groups,id',
             'student_ids' => 'required|array',
             'student_ids.*' => 'exists:students,id',
-            'is_public' => 'required|boolean',
-            'subjects' => 'required|array',
-            'subjects.*' => 'required|string|min:2|max:191'
+            'is_public' => 'required|boolean'
         ];
+
+        if (request()->getMethod() === 'POST') {
+            $rules['subjects'] = 'required|array';
+            $rules['subjects.*'] = 'required|string|min:2|max:191';
+        }
+
+        return $rules;
     }
 }
