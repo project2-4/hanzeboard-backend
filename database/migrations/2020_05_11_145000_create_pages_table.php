@@ -29,7 +29,7 @@ class CreatePagesTable extends Migration
         Schema::table('subjects', function (Blueprint $table) {
             $table->foreignId('page_id')
                 ->constrained('pages')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
         });
     }
 
