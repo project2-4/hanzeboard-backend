@@ -16,11 +16,11 @@ class CreateUserHasCoursesTable extends Migration
         Schema::create('user_has_courses', function (Blueprint $table) {
             $table->foreignId('user_id')
                 ->constrained('users')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->foreignId('course_id')
                 ->constrained('courses')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->primary(['user_id', 'course_id']);
         });

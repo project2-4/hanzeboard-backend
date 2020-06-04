@@ -20,11 +20,11 @@ class CreateAnnouncementsTable extends Migration
 
             $table->foreignId('posted_by')
                 ->constrained('staff')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->foreignId('course_id')
                 ->constrained('courses')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

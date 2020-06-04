@@ -20,10 +20,10 @@ class CreateGradesTable extends Migration
 
             $table->foreignId('assignment_id')
                 ->constrained('assignments')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
             $table->foreignId('student_id')
                 ->constrained('students')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
             $table->foreignId('recorded_by')
                 ->constrained('staff')
                 ->onDelete('restrict');

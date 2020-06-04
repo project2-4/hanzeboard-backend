@@ -21,7 +21,7 @@ class CreatePagesTable extends Migration
             $table->foreignId('parent_page_id')
                 ->nullable()
                 ->constrained('pages')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

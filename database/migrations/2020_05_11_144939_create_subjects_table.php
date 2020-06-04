@@ -19,7 +19,7 @@ class CreateSubjectsTable extends Migration
 
             $table->foreignId('course_id')
                 ->constrained('courses')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

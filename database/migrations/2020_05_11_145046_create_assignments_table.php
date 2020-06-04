@@ -23,7 +23,7 @@ class CreateAssignmentsTable extends Migration
 
             $table->foreignId('subject_id')
                 ->constrained('subjects')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

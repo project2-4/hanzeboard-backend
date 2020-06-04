@@ -21,7 +21,7 @@ class CreatePageItemsTable extends Migration
 
             $table->foreignId('page_id')
                 ->constrained('pages')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
