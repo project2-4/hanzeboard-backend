@@ -48,13 +48,17 @@ class CoursesRepository extends Repository
      */
     protected function fill(array $data, Model $model = null): bool
     {
-        $success = parent::fill(Arr::except($data, ['staff_ids', 'group_ids', 'student_ids']), $model);
+        $success = parent::fill(Arr::except($data, ['staff_ids', 'group_ids', 'student_ids', 'subjects']), $model);
 
         if (!$success) {
             throw new \RuntimeException('Invalid state: could not create a course object');
         }
 
         $this->getModel()->users()->sync($this->getUserIds($data));
+
+        if (is_null($model)) {
+           // $this->getModel()->subjects()->createMany([]);
+        }
 
         return true;
     }

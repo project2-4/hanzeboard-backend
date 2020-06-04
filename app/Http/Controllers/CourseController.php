@@ -104,6 +104,7 @@ class CourseController extends Controller
             ->users()
             ->where('profile_type', 'staff')
             ->with('profile')
+            ->with('profile.status')
             ->get();
 
         return $this->response($staff, 200);

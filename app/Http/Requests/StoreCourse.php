@@ -26,7 +26,9 @@ class StoreCourse extends FormRequest
             'group_ids.*' => 'exists:groups,id',
             'student_ids' => 'required|array',
             'student_ids.*' => 'exists:students,id',
-            'is_public' => 'required|boolean'
+            'is_public' => 'required|boolean',
+            'subjects' => 'required|array',
+            'subjects.*' => 'required|string|min:2|max:191'
         ];
     }
 }
