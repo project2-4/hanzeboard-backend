@@ -20,12 +20,12 @@ Route::group(['middleware' => 'api'], function () {
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'auth'], function () {
-        Route::post('login', 'AuthController@login');
+        Route::post('login', 'AuthController@login')->name('auth.login');
 
         Route::group(['middleware' => 'auth:api'], function () {
-            Route::post('logout', 'AuthController@logout');
-            Route::post('refresh', 'AuthController@refresh');
-            Route::post('me', 'AuthController@me');
+            Route::post('logout', 'AuthController@logout')->name('auth.logout');
+            Route::post('refresh', 'AuthController@refresh')->name('auth.refresh');
+            Route::post('me', 'AuthController@me')->name('auth.me');
         });
     });
 
@@ -70,8 +70,11 @@ Route::group(['middleware' => 'api'], function () {
         Route::apiResource('grades', 'GradesController');
 
         /** Groups */
-        Route::get('groups/me', 'GroupController@me');
+        Route::get('groups/me', 'GroupController@me')->name('groups.me');
         Route::apiResource('groups', 'GroupController');
+
+        /** Staff */
+        Route::get('staff/me', 'StaffController@me')->name('staff.me');
 
         /** Admin Authorized actions */
         Route::group(['middleware' => ['auth.admin']], function () {

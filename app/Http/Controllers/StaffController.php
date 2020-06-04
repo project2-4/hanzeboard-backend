@@ -39,6 +39,15 @@ class StaffController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
+     */
+    public function me(): JsonResponse
+    {
+        return $this->response($this->repository->me(auth()->user()), 200);
+    }
+
+    /**
      * @param  \App\Http\Requests\StoreStaff  $request
      *
      * @return \Illuminate\Http\JsonResponse

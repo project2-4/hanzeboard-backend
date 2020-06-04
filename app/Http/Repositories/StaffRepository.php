@@ -3,10 +3,8 @@
 namespace App\Http\Repositories;
 
 use App\Http\Requests\StoreStaff;
-use App\Http\Requests\StoreUser;
 use App\Models\Staff;
 use App\Models\StaffStatus;
-use App\Models\Student;
 use App\Models\User;
 use App\Traits\CreatesUsers;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,6 +44,20 @@ class StaffRepository extends Repository
     public function all(): Collection
     {
         return $this->getModel()->with('user')->get();
+    }
+
+    /**
+     * @param  \App\Models\User  $user
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function me(User $user): Collection
+    {
+        $user->load(['courses.users' => function ($q) use ( &$posts ) {
+            $posts = $q->with('profile.status')->where('profile_type', 'staff')->get()->unique();
+        }]);
+
+        return $posts;
     }
 
     /**
