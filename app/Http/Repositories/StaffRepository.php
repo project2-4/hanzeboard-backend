@@ -124,8 +124,7 @@ class StaffRepository extends Repository
         if ($model) {
             $staffStatus = StaffStatus::where('id', $model->staff_status_id);
             $staffStatus->update($staffStatusData);
-
-            return $staffStatus;
+            return $staffStatus->first();
         }
 
         return StaffStatus::create($staffStatusData);

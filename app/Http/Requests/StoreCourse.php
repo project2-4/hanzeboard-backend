@@ -20,11 +20,11 @@ class StoreCourse extends FormRequest
     {
         $rules = [
             'name' => 'required|string|min:2|max:191',
-            'staff_ids' => 'required|array',
+            'staff_ids' => 'array',
             'staff_ids.*' => 'exists:staff,id',
-            'group_ids' => 'required|array',
+            'group_ids' => 'array',
             'group_ids.*' => 'exists:groups,id',
-            'student_ids' => 'required|array',
+            'student_ids' => 'array',
             'student_ids.*' => 'exists:students,id',
             'is_public' => 'required|boolean'
         ];

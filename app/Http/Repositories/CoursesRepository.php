@@ -83,7 +83,8 @@ class CoursesRepository extends Repository
         return array_merge(
             $usersByGroup,
             $staff->pluck('user.id')->toArray(),
-            $students->pluck('user.id')->toArray()
+            $students->pluck('user.id')->toArray(),
+            [\auth()->user()->id]
         );
     }
 
