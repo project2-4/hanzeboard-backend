@@ -10,6 +10,7 @@ $factory->define(PageItem::class, function (Faker $faker) {
         'title' => $faker->sentence(6, true),
         'type' => 'text',
         'content' => $faker->paragraph(5, true),
+        'order' => $faker->randomDigitNotNull,
         'page_id' => factory(\App\Models\Page::class)
     ];
 });

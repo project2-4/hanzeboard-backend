@@ -52,7 +52,7 @@ class CoursesRepository extends Repository
         $success = parent::fill(Arr::except($data, ['staff_ids', 'group_ids', 'student_ids', 'subjects']), $model);
 
         if (!$success) {
-            throw new \RuntimeException('Invalid state: could not create a course object');
+            throw new \RuntimeException('Invalid state: could not save course');
         }
 
         $this->getModel()->users()->sync($this->getUserIds($data));

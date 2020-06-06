@@ -19,7 +19,13 @@ class StoreSubject extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:2|max:191'
+            'name' => 'required|string|min:2|max:191',
+            'page_name' => 'required|string|min:2|max:191',
+            'page_content' => 'required|string|min:2',
+            'page_items' => 'required|array',
+            'page_items.*.title' => 'required|string|min:0|max:191',
+            'page_items.*.content' => 'required|string|min:2',
+            'page_items.*.type' => 'required|in:text,files,assignment'
         ];
     }
 }

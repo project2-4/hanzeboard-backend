@@ -16,7 +16,8 @@ class Page extends Model
      */
     public function items(): HasMany
     {
-        return $this->hasMany(PageItem::class, 'page_id');
+        return $this->hasMany(PageItem::class, 'page_id')
+            ->orderBy('order');
     }
 
     /**

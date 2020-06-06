@@ -45,7 +45,7 @@ abstract class Repository
      * @return array
      * @throws Throwable
      */
-    public function save(array $data, Model $model = null): array
+    final public function save(array $data, Model $model = null): array
     {
         return [DB::transaction(function () use ($data, $model) {
             return $this->fill($data, $model);
@@ -58,7 +58,7 @@ abstract class Repository
      * @return bool
      * @throws Throwable
      */
-    public function delete(Model $model): bool
+    final public function delete(Model $model): bool
     {
         return DB::transaction(function () use ($model) {
             return (bool) $this->destroy($model);

@@ -47,10 +47,6 @@ abstract class Controller extends BaseController
         switch (request()->method()) {
             case 'POST':
                 return 201;
-            case 'PUT':
-            case 'PATCH':
-            case 'DELETE':
-                return 204;
             default:
                 return 200;
         }
