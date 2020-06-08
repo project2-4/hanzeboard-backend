@@ -22,10 +22,14 @@ class StoreSubject extends FormRequest
             'name' => 'required|string|min:2|max:191',
             'page_name' => 'required|string|min:2|max:191',
             'page_content' => 'required|string|min:2',
-            'page_items' => 'required|array',
-            'page_items.*.title' => 'required|string|min:0|max:191',
-            'page_items.*.content' => 'required|string|min:2',
-            'page_items.*.type' => 'required|in:text,files,assignment'
+            'page_items' => 'nullable|array',
+            'page_items.*.id' => 'nullable|int|exists:page_items,id',
+            'page_items.*.deleted' => 'required|boolean',
+            'page_items.*.title' => 'nullable|string|min:0|max:191',
+            'page_items.*.content' => 'nullable|string|min:2',
+            'page_items.*.type' => 'nullable|in:text,files,assignment',
+            'page_items.*.files' => 'nullable|array',
+            'page_items.*.files.*' => 'nullable|file',
         ];
     }
 }

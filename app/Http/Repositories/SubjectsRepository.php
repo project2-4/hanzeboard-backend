@@ -3,7 +3,9 @@
 namespace App\Http\Repositories;
 
 use App\Models\Page;
+use App\Models\PageItem;
 use App\Models\Subject;
+use App\Traits\ManagesPageItems;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
@@ -14,6 +16,8 @@ use Illuminate\Support\Arr;
  */
 class SubjectsRepository extends Repository
 {
+    use ManagesPageItems;
+
     /**
      * SubjectRepository constructor.
      *
@@ -29,6 +33,7 @@ class SubjectsRepository extends Repository
      * @param  \Illuminate\Database\Eloquent\Model|null  $model
      *
      * @return bool
+     * @throws \Exception
      */
     protected function fill(array $data, Model $model = null): bool
     {
@@ -63,7 +68,8 @@ class SubjectsRepository extends Repository
      * @param  array  $data
      * @param  \Illuminate\Database\Eloquent\Model|null  $model
      *
-     * @return \App\Models\Page
+     * @return \App\Models\Page|mixed
+     * @throws \Exception
      */
     protected function savePage(array $data, ?Model $model = null)
     {
@@ -74,7 +80,9 @@ class SubjectsRepository extends Repository
             'content' => $data['page_content']
         ])->save();
 
-        $this->savePageItems($page, $data['page_items']);
+        if (isset($data['page_items'])) {
+            $this->savePageItems($page, $data['page_items']);
+        }
 
         return $page;
     }
@@ -82,22 +90,23 @@ class SubjectsRepository extends Repository
     /**
      * @param  \App\Models\Page  $page
      * @param  array  $items
+     *
+     * @throws \Exception
      */
     protected function savePageItems(Page $page, array $items)
     {
-        // Delete all previous items
-        $page->items()->delete();
+        $pageItems = PageItem::findMany(array_column($items, 'id'))->keyBy('id');
+        $existingPageItemIds = $page->items->pluck('id')->toArray();
+        $order = 1;
 
-        // Create new items based on data
-        $page->items()->createMany(
-            array_map(function ($item, $iteration) use ($page) {
-                return [
-                    'title' => $item['title'],
-                    'content' => $item['content'],
-                    'type' => $item['type'],
-                    'order' => $iteration
-                ];
-            }, $items, range(1, count($items)))
-        );
+        foreach ($items as $item) {
+            if ((bool) $item['deleted']) {
+                $this->pageItemDelete($pageItems[$item['id']]);
+            } else if (isset($item['id']) && in_array($item['id'], $existingPageItemIds)) {
+                $this->pageItemUpdate($pageItems[$item['id']], $item, $order++);
+            } else {
+                $this->pageItemCreate($page, $item, $order++);
+            }
+        }
     }
 }
