@@ -65,6 +65,9 @@ class AssignmentController extends Controller
      */
     public function show(Course $course, Subject $subject, Assignment $assignment): JsonResponse
     {
+        // Forgive me
+        $assignment->deadline_formatted = $assignment->deadline->format('Y-m-d');
+
         return $this->response($assignment, 200);
     }
 
