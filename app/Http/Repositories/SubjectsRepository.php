@@ -54,7 +54,14 @@ class SubjectsRepository extends Repository
      */
     protected function destroy(Model $model): ?bool
     {
-        $page = $model->page();
+        $page = $model->page;
+
+        // Remove files from file system
+        $pageItems = $page->items()->where('type', 'files')->get();
+        foreach ($pageItems as $pageItem) {
+            $this->pageItemDelete($pageItem);
+        }
+
         $success = $model->delete();
 
         if (!$success) {
