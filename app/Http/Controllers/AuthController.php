@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\GeneratesRefreshTokens;
+use App\Traits\RefreshTokens;
 use Illuminate\Http\JsonResponse;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class AuthController extends Controller
 {
-    use GeneratesRefreshTokens;
+    use RefreshTokens;
 
     /**
      * Get a JWT via given credentials.
@@ -78,9 +78,9 @@ class AuthController extends Controller
             ->json([
                 'access_token'  => $token,
                 'token_type'    => 'bearer',
-                'expires_in'    => auth()->factory()->getTTL() * 60,
-                'refresh_token' => $this->generateRefreshToken($token),
+                'expires_in'    => auth()->factory()->getTTL() * 60
             ])
+            ->cookie('refresh_token', $this->generateRefreshToken($token), $this->getRefreshTokenTTL())
             ->header('Authorization', "Bearer {$token}");
     }
 }
