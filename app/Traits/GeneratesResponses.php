@@ -2,7 +2,8 @@
 
 namespace App\Traits;
 
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 /**
  * Trait GeneratesLinks
@@ -11,32 +12,15 @@ use Illuminate\Http\JsonResponse;
  */
 trait GeneratesResponses
 {
-    use HasLinks;
-
     /**
-     * @param $message
-     * @param  int  $code
-     * @param  array  $extraLinks
+     * @param $token
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return string
      */
-    protected function response(
-        $message,
-        int $code = 200,
-        array $extraLinks = []
-    ): JsonResponse {
-        $links = $this->getLinks();
+    protected function generateRefreshToken($token)
+    {
+        Cache::put($token, md5($refreshToken = Str::random(256)), config('jwt.refresh_ttl') * 60);
 
-        if (count($extraLinks) > 0) {
-            foreach ($extraLinks as $route => $method) {
-                $links[] = $this->addLink($route, $method);
-            }
-        }
-
-        return response()->json([
-            'message' => $message,
-            'code'    => $code,
-            'links'   => $links
-        ], $code);
+        return $refreshToken;
     }
 }
