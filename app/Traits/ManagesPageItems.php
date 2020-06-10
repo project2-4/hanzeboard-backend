@@ -46,7 +46,10 @@ trait ManagesPageItems
             $data[ 'content' ] = json_decode($data[ 'content' ], true);
 
             $this->removeFiles($pageItem, $data[ 'content' ]);
-            $data[ 'content' ] = $this->storeFiles($data[ 'files' ], $data[ 'content' ]);
+
+            if(isset($data[ 'files' ])) {
+                $data[ 'content' ] = $this->storeFiles($data[ 'files' ], $data[ 'content' ]);
+            }
         }
 
         // Update database record
