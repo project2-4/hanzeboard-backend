@@ -110,7 +110,7 @@ trait ManagesPageItems
     private function storeFiles(array $files, array $content)
     {
         foreach ($files as $file) {
-            $path = $file->store('public');
+            $path = str_replace('public/', '', $file->store('public'));
             $content[$path] = $file->getClientOriginalName();
         }
 

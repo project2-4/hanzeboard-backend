@@ -2,12 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\RefreshTokens;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class Admin
+class ValidRefreshToken
 {
+    use RefreshTokens;
+
     /**
      * Handle an incoming request.
      *
@@ -17,8 +19,8 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->isStaff()) {
-            return abort(403, 'Unauthorized action.');
+        if (!$this->validateRefreshToken($request->bearerToken(), $request->cookie('refresh_token'))) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
         return $next($request);
