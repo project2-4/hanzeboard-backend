@@ -55,7 +55,7 @@ trait ManagesPageItems
         // Update database record
         $pageItem->update([
             'title' => $data['title'],
-            'content' => json_encode($data['content']),
+            'content' => $pageItem->type === 'files' ? json_encode($data['content']) : $data['content'],
             'type' => $data['type'],
             'order' => $order
         ]);
