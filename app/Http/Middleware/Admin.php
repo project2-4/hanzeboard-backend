@@ -18,7 +18,7 @@ class Admin
     public function handle($request, Closure $next)
     {
         if (!Auth::user()->isStaff()) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Unauthorized');
         }
 
         return $next($request);

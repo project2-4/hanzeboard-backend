@@ -20,7 +20,7 @@ class ValidRefreshToken
     public function handle($request, Closure $next)
     {
         if (!$this->validateRefreshToken($request->bearerToken(), $request->cookie('refresh_token'))) {
-            return abort(403, 'Unauthorized');
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
         return $next($request);

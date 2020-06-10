@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Traits\RefreshTokens;
 use Illuminate\Http\JsonResponse;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
@@ -21,7 +22,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -58,10 +59,8 @@ class AuthController extends Controller
     {
         try {
             return $this->respondWithToken(auth()->refresh());
-        } catch (TokenBlacklistedException $e) {
-            return response()->json(['message' => 'Token blacklisted'], 401);
-        } catch (TokenExpiredException $e) {
-            return response()->json(['message' => 'Token expired'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
     }
 

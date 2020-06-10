@@ -53,6 +53,6 @@ trait RefreshTokens
      */
     protected function getRefreshTokenTTL(): int
     {
-        return config('jwt.refresh_ttl') * 60;
+        return config('jwt.refresh_ttl');
     }
 }

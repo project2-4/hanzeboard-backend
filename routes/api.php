@@ -22,13 +22,13 @@ Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::post('login', 'AuthController@login')->name('auth.login');
 
+        Route::post('refresh', 'AuthController@refresh')
+            ->middleware('auth.refresh')
+            ->name('auth.refresh');
+
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('logout', 'AuthController@logout')->name('auth.logout');
             Route::post('me', 'AuthController@me')->name('auth.me');
-
-            Route::post('refresh', 'AuthController@refresh')
-                ->middleware('auth.refresh')
-                ->name('auth.refresh');
         });
     });
 
