@@ -20,6 +20,11 @@ class Assignment extends Model
     ];
 
     /**
+     * @var string[]
+     */
+    protected $appends = ['avg_grade', 'passed', 'total_submissions', 'grade_overview'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function grades(): HasMany
@@ -33,5 +38,48 @@ class Assignment extends Model
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class, 'subject_id');
+    }
+
+    /**
+     * @return float
+     */
+    public function getAvgGradeAttribute(): float
+    {
+        return $this->grades->avg('grade');
+    }
+
+    /**
+     * @return int
+     */
+    public function getPassedAttribute(): int
+    {
+        return $this->grades->filter(function ($value) {
+            return $value['grade'] >= 5.5;
+        })->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalSubmissionsAttribute(): int
+    {
+        return $this->grades->count();
+    }
+
+    /**
+     * @return array
+     */
+    public function getGradeOverviewAttribute(): array
+    {
+        $overview = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $overview[$i] = 0;
+        }
+
+        $this->grades->each(function ($item) use(&$overview) {
+            $overview[floor($item['grade'])]++;
+        });
+
+        return $overview;
     }
 }
