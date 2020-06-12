@@ -60,7 +60,7 @@ class SubjectController extends Controller
      */
     public function show(Course $course, Subject $subject): JsonResponse
     {
-        return $this->response($subject->load(['page', 'page.items']), 200);
+        return $this->response($subject->load(['page.items.assignment']), 200);
     }
 
     /**

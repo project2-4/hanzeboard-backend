@@ -59,6 +59,9 @@ Route::group(['middleware' => 'api'], function () {
             Route::group(['prefix' => 'subjects/{subject}'], function () {
                 /** Assignments */
                 Route::apiResource('assignments', 'AssignmentController')->only(['index', 'show']);
+                /** Submissions */
+                Route::apiResource('assignments/{assignment}/submissions', 'SubmissionController')
+                    ->only(['store']);
             });
         });
 
@@ -90,6 +93,9 @@ Route::group(['middleware' => 'api'], function () {
                 Route::group(['prefix' => 'subjects/{subject}'], function () {
                     /** Assignments */
                     Route::apiResource('assignments', 'AssignmentController')->only(['store', 'update', 'destroy']);
+                    /** Submissions */
+                    Route::apiResource('assignments/{assignment}/submissions', 'SubmissionController')
+                        ->only(['index']);
                 });
             });
 

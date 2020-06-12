@@ -28,6 +28,7 @@ class StoreSubject extends FormRequest
             'page_items.*.title' => 'nullable|string|min:0|max:191',
             'page_items.*.content' => 'nullable|string|min:2',
             'page_items.*.type' => 'nullable|in:text,files,assignment',
+            'page_items.*.assignment_id' => 'nullable|exists:assignments,id',
             'page_items.*.files' => 'nullable|array',
             'page_items.*.files.*' => 'nullable|file',
         ];
