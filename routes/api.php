@@ -95,7 +95,7 @@ Route::group(['middleware' => 'api'], function () {
                     Route::apiResource('assignments', 'AssignmentController')->only(['store', 'update', 'destroy']);
                     /** Submissions */
                     Route::apiResource('assignments/{assignment}/submissions', 'SubmissionController')
-                        ->only(['index']);
+                        ->only(['index', 'destroy']);
                 });
             });
 
