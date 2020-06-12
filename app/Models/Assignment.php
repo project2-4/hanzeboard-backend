@@ -22,6 +22,11 @@ class Assignment extends Model
     /**
      * @var string[]
      */
+    protected $hidden = ['grades'];
+
+    /**
+     * @var string[]
+     */
     protected $appends = ['avg_grade', 'passed', 'total_submissions', 'grade_overview'];
 
     /**
@@ -30,6 +35,14 @@ class Assignment extends Model
     public function grades(): HasMany
     {
         return $this->hasMany(Grade::class, 'assignment_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function submissions(): HasMany
+    {
+        return $this->hasMany(Submission::class, 'assignment_id');
     }
 
     /**

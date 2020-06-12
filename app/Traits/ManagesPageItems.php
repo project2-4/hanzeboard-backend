@@ -30,7 +30,8 @@ trait ManagesPageItems
             'title' => $data['title'],
             'content' => json_encode($data['content']),
             'type' => $data['type'],
-            'order' => $order
+            'order' => $order,
+            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
         ]);
     }
 
@@ -57,7 +58,8 @@ trait ManagesPageItems
             'title' => $data['title'],
             'content' => $pageItem->type === 'files' ? json_encode($data['content']) : $data['content'],
             'type' => $data['type'],
-            'order' => $order
+            'order' => $order,
+            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
         ]);
     }
 
@@ -73,7 +75,7 @@ trait ManagesPageItems
             $files = array_keys(json_decode($pageItem->content, true));
 
             foreach ($files as $file) {
-                Storage::delete($file);
+                Storage::disk('public')->delete($file);
             }
         }
 
@@ -94,7 +96,7 @@ trait ManagesPageItems
 
         foreach ($oldFiles as $oldFile) {
             if (!in_array($oldFile, $newFiles)) {
-                Storage::delete($oldFile);
+                Storage::disk('public')->delete($oldFile);
             }
         }
     }
