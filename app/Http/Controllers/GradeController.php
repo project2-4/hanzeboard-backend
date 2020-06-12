@@ -31,7 +31,7 @@ class GradeController extends Controller
             return $this->response([], 200);
         }
 
-        return $this->response(Auth::user()->profile->grades->with(['recorder.user', 'assignment.subject'])->get(), 200);
+        return $this->response(Auth::user()->profile->grades->load(['recorder.user', 'assignment.subject']), 200);
     }
 
     /**
