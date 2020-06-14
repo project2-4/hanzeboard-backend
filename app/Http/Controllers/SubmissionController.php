@@ -34,7 +34,7 @@ class SubmissionController extends Controller
      */
     public function index(Course $course, Subject $subject, Assignment $assignment): JsonResponse
     {
-        return $this->response($assignment->submissions, 200);
+        return $this->response($assignment->submissions()->with('student', 'student.user')->get(), 200);
     }
 
     /**
