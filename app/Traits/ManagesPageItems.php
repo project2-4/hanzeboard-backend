@@ -31,7 +31,7 @@ trait ManagesPageItems
             'content' => json_encode($data['content']),
             'type' => $data['type'],
             'order' => $order,
-            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
+            'assignment_id' => $data['type'] === 'assignment' ? $data['content'] : null
         ]);
     }
 
@@ -59,7 +59,7 @@ trait ManagesPageItems
             'content' => $pageItem->type === 'files' ? json_encode($data['content']) : $data['content'],
             'type' => $data['type'],
             'order' => $order,
-            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
+            'assignment_id' => $data['type'] === 'assignment' ? $data['content'] : null
         ]);
     }
 
