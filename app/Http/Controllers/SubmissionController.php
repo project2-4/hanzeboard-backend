@@ -41,6 +41,30 @@ class SubmissionController extends Controller
      * @param  \App\Models\Course  $course
      * @param  \App\Models\Subject  $subject
      * @param  \App\Models\Assignment  $assignment
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me(Course $course, Subject $subject): JsonResponse
+    {
+        $assignments = $subject->assignments;
+        $response = [];
+
+        // This can be better
+        foreach ($assignments as $assignment) {
+            $submission = $assignment->submissions()->where('student_id', '=', Auth::user()->profile_id)->orderBy('created_at', 'DESC')->first();
+            if($submission) {
+                $response[$assignment->id] = $submission;
+            }
+        }
+
+        return $this->response($response, 200);
+    }
+
+
+    /**
+     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Assignment  $assignment
      * @param  \App\Http\Requests\StoreSubmission  $request
      *
      * @return \Illuminate\Http\JsonResponse

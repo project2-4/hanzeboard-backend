@@ -62,6 +62,8 @@ Route::group(['middleware' => 'api'], function () {
                 /** Submissions */
                 Route::apiResource('assignments/{assignment}/submissions', 'SubmissionController')
                     ->only(['store']);
+
+                Route::get('my-submission', 'SubmissionController@me');
             });
         });
 

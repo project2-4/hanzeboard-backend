@@ -58,7 +58,7 @@ class Assignment extends Model
      */
     public function getAvgGradeAttribute(): float
     {
-        return $this->grades->avg('grade');
+        return $this->grades->avg('grade') ?? 0.0;
     }
 
     /**
