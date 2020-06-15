@@ -85,12 +85,12 @@ class Assignment extends Model
     public function getGradeOverviewAttribute(): array
     {
         $overview = [];
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $overview[$i] = 0;
         }
 
         $this->grades->each(function ($item) use(&$overview) {
-            $overview[floor($item['grade'])]++;
+            $overview[floor($item['grade']) - 1]++;
         });
 
         return $overview;
