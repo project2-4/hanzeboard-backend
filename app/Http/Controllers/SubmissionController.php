@@ -45,18 +45,11 @@ class SubmissionController extends Controller
      */
     public function me(Course $course, Subject $subject): JsonResponse
     {
-        $assignments = $subject->assignments;
-        $response = [];
+        $assignmentIds = $subject->assignments()->pluck('id');
+        $submissions = Submission::where('student_id', '=', Auth::user()->profile_id)
+            ->whereIn('assignment_id', $assignmentIds)->get()->keyBy('assignment_id');
 
-        // This can be better
-        foreach ($assignments as $assignment) {
-            $submission = $assignment->submissions()->where('student_id', '=', Auth::user()->profile_id)->orderBy('created_at', 'DESC')->first();
-            if($submission) {
-                $response[$assignment->id] = $submission;
-            }
-        }
-
-        return $this->response($response, 200);
+        return $this->response($submissions, 200);
     }
 
 

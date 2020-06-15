@@ -27,7 +27,7 @@ class Assignment extends Model
     /**
      * @var string[]
      */
-    protected $appends = ['avg_grade', 'passed', 'total_submissions', 'grade_overview'];
+    protected $appends = ['avg_grade', 'passed', 'total_submissions', 'grade_overview', 'deadline_formatted'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -77,6 +77,14 @@ class Assignment extends Model
     public function getTotalSubmissionsAttribute(): int
     {
         return $this->grades->count();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeadlineFormattedAttribute(): string
+    {
+        return $this->deadline->format('Y-m-d');
     }
 
     /**
