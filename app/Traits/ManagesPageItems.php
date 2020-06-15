@@ -22,16 +22,16 @@ trait ManagesPageItems
     {
         // If page item type equals files, store files on filesystem
         if ($data['type'] === 'files') {
-            $data['content'] = $this->storeFiles($data['files'], []);
+            $data['content'] = json_encode($this->storeFiles($data['files'], []));
         }
 
         // Create database record
         $page->items()->create([
             'title' => $data['title'],
-            'content' => json_encode($data['content']),
+            'content' => $data['content'] ?? '',
             'type' => $data['type'],
             'order' => $order,
-            'assignment_id' => $data['type'] === 'assignment' ? $data['content'] : null
+            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
         ]);
     }
 
@@ -49,17 +49,17 @@ trait ManagesPageItems
             $this->removeFiles($pageItem, $data[ 'content' ]);
 
             if(isset($data[ 'files' ])) {
-                $data[ 'content' ] = $this->storeFiles($data[ 'files' ], $data[ 'content' ]);
+                $data[ 'content' ] = json_encode($this->storeFiles($data[ 'files' ], $data[ 'content' ]));
             }
         }
 
         // Update database record
         $pageItem->update([
             'title' => $data['title'],
-            'content' => $pageItem->type === 'files' ? json_encode($data['content']) : $data['content'],
+            'content' => $data['content'] ?? '',
             'type' => $data['type'],
             'order' => $order,
-            'assignment_id' => $data['type'] === 'assignment' ? $data['content'] : null
+            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
         ]);
     }
 
