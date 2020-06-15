@@ -18,11 +18,17 @@ class StoreAssignment extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|string|min:2|max:191',
             'type' => 'required|string|in:MC,open,mixed',
             'credits' => 'required|int|between:0,60',
-            'deadline' => 'required|date|date_format:Y-m-d|after:now'
+            'deadline' => 'required|date|date_format:Y-m-d'
         ];
+
+        if ($this->method === 'POST') {
+            $rules['deadline'] .= '|after:now';
+        }
+
+        return $rules;
     }
 }
