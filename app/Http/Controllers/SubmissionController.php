@@ -40,7 +40,6 @@ class SubmissionController extends Controller
     /**
      * @param  \App\Models\Course  $course
      * @param  \App\Models\Subject  $subject
-     * @param  \App\Models\Assignment  $assignment!block.new && block.assignment_id === assignment.id ? 'selected' : null
      *
      * @return \Illuminate\Http\JsonResponse
      */
