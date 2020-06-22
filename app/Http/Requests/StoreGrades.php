@@ -18,11 +18,22 @@ class StoreGrades extends FormRequest
      *
      * @return array
      */
-    public static function rules()
+    public static function rules(): array
     {
         return [
             'grades' => 'required|file',
             'assignment' => 'required|int'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'grades' => __('validation.attributes.grades'),
+            'assignment' => __('validation.attributes.assignment')
         ];
     }
 }

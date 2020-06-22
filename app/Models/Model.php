@@ -36,4 +36,19 @@ abstract class Model extends BaseModel
     {
         return new OrderByScope();
     }
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->appends[] = 'created_at_formatted';
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAtFormattedAttribute(): string
+    {
+        return $this->created_at->format('Y-m-d H:i:s');
+    }
 }

@@ -21,7 +21,7 @@ class StoreStaff extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return array_merge(StoreUser::rules(), [
             'abbreviation' => 'required|string|min:4|max:4',
@@ -29,8 +29,24 @@ class StoreStaff extends FormRequest
         ],  self::STATUS_RULES);
     }
 
-    public static function statusRules()
+    /**
+     * @return array|string[]
+     */
+    public static function statusRules(): array
     {
         return self::STATUS_RULES;
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return array_merge(StoreUser::translations(), [
+            'abbreviation' => __('validation.attributes.abbreviation'),
+            'office_location' => __('validation.attributes.office'),
+            'status' => __('validation.attributes.status'),
+            'until' => __('validation.attributes.until')
+        ]);
     }
 }

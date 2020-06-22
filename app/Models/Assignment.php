@@ -84,7 +84,7 @@ class Assignment extends Model
      */
     public function getDeadlineFormattedAttribute(): string
     {
-        return $this->deadline->format('Y-m-d');
+        return $this->deadline->format('d-m-Y');
     }
 
     /**

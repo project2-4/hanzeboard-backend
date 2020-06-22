@@ -18,10 +18,20 @@ class StoreSubmission extends FormRequest
      *
      * @return array
      */
-    public static function rules()
+    public static function rules(): array
     {
         return [
             'file' => 'required|file',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'file' => __('validation.attributes.file')
         ];
     }
 }
