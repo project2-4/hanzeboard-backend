@@ -41,9 +41,11 @@ Route::group(['middleware' => 'api'], function () {
 
         /** Courses */
         Route::get('courses/all', 'CourseController@all')->name('courses.all');
-        Route::apiResource('courses', 'CourseController')->only(['index', 'show']);
+        Route::apiResource('courses', 'CourseController')
+            ->only(['index', 'show'])
+            ->middleware('courses.enrolled');
 
-        Route::group(['prefix' => 'courses/{course}'], function () {
+        Route::group(['prefix' => 'courses/{course}', 'middleware' => ['courses.enrolled']], function () {
             Route::get('students', 'CourseController@students')->name('courses.students');
             Route::get('staff', 'CourseController@staff')->name('courses.staff');
 
@@ -80,9 +82,11 @@ Route::group(['middleware' => 'api'], function () {
         /** Admin Authorized actions */
         Route::group(['middleware' => ['auth.staff']], function () {
             /** Courses */
-            Route::apiResource('courses', 'CourseController')->only(['store', 'update', 'destroy']);
+            Route::apiResource('courses', 'CourseController')
+                ->only(['store', 'update', 'destroy'])
+                ->middleware('courses.enrolled');
 
-            Route::group(['prefix' => 'courses/{course}'], function () {
+            Route::group(['prefix' => 'courses/{course}', 'middleware' => ['courses.enrolled']], function () {
                 /** Announcements */
                 Route::apiResource('announcements', 'AnnouncementController')->only(['store', 'update', 'destroy']);
 
