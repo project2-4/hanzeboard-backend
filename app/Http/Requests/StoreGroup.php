@@ -16,10 +16,20 @@ class StoreGroup extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string|min:2|max:191'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => __('validation.attributes.name')
         ];
     }
 }

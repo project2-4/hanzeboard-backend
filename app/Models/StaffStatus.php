@@ -14,6 +14,28 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class StaffStatus extends Model
 {
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'until' => 'datetime',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $appends = ['until_formatted'];
+
+    /**
+     * @return string
+     */
+    public function getUntilFormattedAttribute(): string
+    {
+        return $this->until->format('d-m-Y');
+    }
+
+    /**
      * @return HasOne
      */
     public function staff(): HasOne

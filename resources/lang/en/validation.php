@@ -145,7 +145,43 @@ return [
     | of "email". This simply helps us make our message more expressive.
     |
     */
-
-    'attributes' => [],
+    'attributes' => [
+        'title' => 'title',
+        'content' => 'content',
+        'name' => 'name',
+        'type' => 'type',
+        'credits' => 'credits',
+        'staff' => 'staff',
+        'groups' => 'groups',
+        'group' => 'group',
+        'students' => 'students',
+        'student' => 'student',
+        'is_public' => 'is public',
+        'subjects' => 'subjects',
+        'subject' => 'subject',
+        'grades' => 'grades',
+        'assignment' => 'assignment',
+        'parent_page' => 'parent page',
+        'abbreviation' => 'abbreviation',
+        'office' => 'office location',
+        'status' => 'status',
+        'until' => 'until',
+        'student_number' => 'student number',
+        'page_name' => 'page name',
+        'page_content' => 'page content',
+        'page_items' => 'page items',
+        'page_items_deleted' => 'page items',
+        'page_items_title' => 'page item title',
+        'page_items_content' => 'page item content',
+        'page_items_type' => 'page item type',
+        'page_items_assignment' => 'page item: assignment',
+        'page_items_files' => 'page item: files',
+        'first_name' => 'first name',
+        'infix' => 'infix',
+        'email' => 'email',
+        'last_name' => 'last name',
+        'avatar_url' => 'profile picture',
+        'role' => 'role'
+    ]
 
 ];

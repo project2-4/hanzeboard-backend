@@ -16,7 +16,7 @@ class StoreAssignment extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = [
             'name' => 'required|string|min:2|max:191',
@@ -30,5 +30,18 @@ class StoreAssignment extends FormRequest
         }
 
         return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => __('validation.attributes.name'),
+            'type' => __('validation.attributes.type'),
+            'credits' => __('validation.attributes.credits'),
+            'deadline' => __('validation.attributes.deadline')
+        ];
     }
 }
