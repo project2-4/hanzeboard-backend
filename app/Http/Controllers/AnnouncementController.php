@@ -6,8 +6,11 @@ use App\Http\Repositories\AnnouncementsRepository;
 use App\Http\Requests\StoreAnnouncement;
 use App\Models\Announcement;
 use App\Models\Course;
+use App\Models\User;
+use App\Notifications\NewAnnouncement;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Class AnnouncementController
@@ -50,6 +53,12 @@ class AnnouncementController extends Controller
             'course_id' => $course->id
         ]));
 
+        $this->notifyStudents(
+            $request->get('title'),
+            $request->get('content'),
+            $course
+        );
+
         return $this->response(compact('success', 'id'), $this->getStatusCode($success));
     }
 
@@ -91,5 +100,22 @@ class AnnouncementController extends Controller
         $success = $this->repository->delete($announcement);
 
         return $this->response(compact('success'), $this->getStatusCode($success));
+    }
+
+    /**
+     * @param  string  $title
+     * @param  string  $content
+     * @param  \App\Models\Course  $course
+     */
+    private function notifyStudents(string $title, string $content, Course $course)
+    {
+        if (config('announcements.debug')) {
+            $users = User::where('email', 'admin@hanze.nl')->get();
+        } else {
+            $users = $course->users()
+                ->where('profile_type', 'student');
+        }
+
+        Notification::send($users, new NewAnnouncement($title, $content, Auth::user()->full_name, $course));
     }
 }

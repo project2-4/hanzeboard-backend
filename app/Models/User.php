@@ -16,8 +16,9 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
- * @method static where(string $string, string $string1, $string2)
- * @method static find(int $id)
+ * Class User
+ *
+ * @package App\Models
  */
 class User extends Model implements
     AuthenticatableContract,

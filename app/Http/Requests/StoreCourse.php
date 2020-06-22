@@ -43,7 +43,7 @@ class StoreCourse extends FormRequest
     public function attributes(): array
     {
         return [
-            'title' => __('validation.attributes.title'),
+            'name' => __('validation.attributes.name'),
             'staff_ids' => __('validation.attributes.staff'),
             'staff_ids.*' => __('validation.attributes.staff'),
             'group_ids' => __('validation.attributes.groups'),
