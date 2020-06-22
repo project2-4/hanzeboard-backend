@@ -14,11 +14,19 @@ use Illuminate\Validation\Rule;
 class StoreSubmission extends FormRequest
 {
     /**
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+        return Auth::user()->profile_type === 'student';
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public static function rules(): array
+    public function rules(): array
     {
         return [
             'file' => 'required|file',
