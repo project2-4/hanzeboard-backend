@@ -48,6 +48,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::group(['prefix' => 'courses/{course}', 'middleware' => ['courses.enrolled']], function () {
             Route::get('students', 'CourseController@students')->name('courses.students');
             Route::get('staff', 'CourseController@staff')->name('courses.staff');
+            Route::delete('unenroll', 'CourseController@unenroll')->name('courses.unenroll');
 
             /** Announcements */
             Route::apiResource('announcements', 'AnnouncementController')->only(['index', 'show']);
