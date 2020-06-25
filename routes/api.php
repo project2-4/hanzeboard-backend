@@ -70,6 +70,9 @@ Route::group(['middleware' => 'api'], function () {
             });
         });
 
+        /** Roles */
+        Route::apiResource('roles', 'RoleController');
+
         /** Grades */
         Route::apiResource('grades', 'GradeController')->only(['index', 'show']);
 
@@ -118,6 +121,7 @@ Route::group(['middleware' => 'api'], function () {
 
             /** Students */
             Route::apiResource('students', 'StudentController');
+            Route::post('students/avatar', 'StudentController@avatar');
 
             /** Roles */
             Route::apiResource('roles', 'RoleController');
