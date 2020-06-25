@@ -12,7 +12,9 @@ class Announcement extends Model
     /**
      * @var string[]
      */
-    protected $appends = ['created_at_formatted'];
+    protected $casts = [
+        'created_at' => 'date:Y-m-d H:i:s',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -28,13 +30,5 @@ class Announcement extends Model
     public function poster(): BelongsTo
     {
         return $this->belongsTo(Staff::class, 'posted_by');
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreatedAtFormattedAttribute(): string
-    {
-        return $this->created_at->format('Y-m-d H:i:s');
     }
 }
