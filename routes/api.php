@@ -64,7 +64,9 @@ Route::group(['middleware' => 'api'], function () {
         Route::apiResource('roles', 'RoleController');
 
         /** Students */
+        Route::get('students/avatar', 'StudentController@getAvatar');
         Route::apiResource('students', 'StudentController');
+        Route::post('students/avatar', 'StudentController@avatar');
 
         /** Grades */
         Route::apiResource('grades', 'GradeController');
