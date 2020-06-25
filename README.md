@@ -16,8 +16,11 @@ cp ./.env.example ./.env
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
-php artisan jwt:secret
 ```
+
+## JWT key pair
+When running this server in a production a fresh RS256 key-pair needs to be generated for security purposes. 
+By running `./genRS256.sh` a new key pair will be generated automatically. 
 
 ## Database
 ![dbdiagram](https://github.com/project2-4/hanzeboard-backend/blob/database/.docs/dbdiagram.png?raw=true)

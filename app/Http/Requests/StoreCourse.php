@@ -16,7 +16,7 @@ class StoreCourse extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = [
             'name' => 'required|string|min:2|max:191',
@@ -35,5 +35,24 @@ class StoreCourse extends FormRequest
         }
 
         return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => __('validation.attributes.name'),
+            'staff_ids' => __('validation.attributes.staff'),
+            'staff_ids.*' => __('validation.attributes.staff'),
+            'group_ids' => __('validation.attributes.groups'),
+            'group_ids.*' => __('validation.attributes.group'),
+            'student_ids' => __('validation.attributes.students'),
+            'student_ids.*' => __('validation.attributes.student'),
+            'is_public' => __('validation.attributes.is_public'),
+            'subjects' => __('validation.attributes.subjects'),
+            'subjects.*' => __('validation.attributes.subject')
+        ];
     }
 }

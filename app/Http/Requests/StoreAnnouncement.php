@@ -16,11 +16,22 @@ class StoreAnnouncement extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => 'required|string|min:2|max:191',
             'content' => 'required|string|min:5',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'title' => __('validation.attributes.title'),
+            'content' => __('validation.attributes.content')
         ];
     }
 }

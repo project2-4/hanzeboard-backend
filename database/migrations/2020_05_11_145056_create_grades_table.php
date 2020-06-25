@@ -26,7 +26,7 @@ class CreateGradesTable extends Migration
                 ->onDelete('cascade');
             $table->foreignId('recorded_by')
                 ->constrained('staff')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

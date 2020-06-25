@@ -16,11 +16,22 @@ class StoreStaffStatus extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'status' => 'required|in:available,leave,sick',
             'until' => 'required|date|date_format:Y-m-d'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'status' => __('validation.attributes.status'),
+            'until' => __('validation.attributes.until')
         ];
     }
 }

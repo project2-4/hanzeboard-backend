@@ -13,4 +13,12 @@ class PageItem extends Model
     {
         return $this->belongsTo(Page::class, 'page_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function assignment(): BelongsTo
+    {
+        return $this->belongsTo(Assignment::class, 'assignment_id');
+    }
 }

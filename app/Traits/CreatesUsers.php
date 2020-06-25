@@ -3,7 +3,13 @@
 namespace App\Traits;
 
 use App\Http\Requests\StoreUser;
+
+use App\Models\User;
+use App\Notifications\YourPassword;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 
 /**
  * Trait GeneratesLinks
@@ -37,11 +43,16 @@ trait CreatesUsers
     {
         $user = $this->user->newInstance();
 
-        return $user->fill(array_merge($data, [
+        $password = Str::random(40);
+        $user->fill(array_merge($data, [
             'profile_type' => $this->getType(),
             'profile_id' => $profileId,
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($password)
         ]))->save();
+
+        $user->notify(new YourPassword($user, $password));
+
+        return $user !== null;
     }
 
     /**

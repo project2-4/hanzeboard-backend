@@ -36,4 +36,9 @@ abstract class Model extends BaseModel
     {
         return new OrderByScope();
     }
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
 }

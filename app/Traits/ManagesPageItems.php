@@ -22,15 +22,16 @@ trait ManagesPageItems
     {
         // If page item type equals files, store files on filesystem
         if ($data['type'] === 'files') {
-            $data['content'] = $this->storeFiles($data['files'], []);
+            $data['content'] = json_encode($this->storeFiles($data['files'], []));
         }
 
         // Create database record
         $page->items()->create([
             'title' => $data['title'],
-            'content' => json_encode($data['content']),
+            'content' => $data['content'] ?? '',
             'type' => $data['type'],
-            'order' => $order
+            'order' => $order,
+            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
         ]);
     }
 
@@ -46,15 +47,19 @@ trait ManagesPageItems
             $data[ 'content' ] = json_decode($data[ 'content' ], true);
 
             $this->removeFiles($pageItem, $data[ 'content' ]);
-            $data[ 'content' ] = $this->storeFiles($data[ 'files' ], $data[ 'content' ]);
+
+            if(isset($data[ 'files' ])) {
+                $data[ 'content' ] = json_encode($this->storeFiles($data[ 'files' ], $data[ 'content' ]));
+            }
         }
 
         // Update database record
         $pageItem->update([
             'title' => $data['title'],
-            'content' => json_encode($data['content']),
+            'content' => $data['content'] ?? '',
             'type' => $data['type'],
-            'order' => $order
+            'order' => $order,
+            'assignment_id' => $data['type'] === 'assignment' ? $data['assignment_id'] : null
         ]);
     }
 
@@ -70,7 +75,7 @@ trait ManagesPageItems
             $files = array_keys(json_decode($pageItem->content, true));
 
             foreach ($files as $file) {
-                Storage::delete($file);
+                Storage::disk('public')->delete($file);
             }
         }
 
@@ -91,7 +96,7 @@ trait ManagesPageItems
 
         foreach ($oldFiles as $oldFile) {
             if (!in_array($oldFile, $newFiles)) {
-                Storage::delete($oldFile);
+                Storage::disk('public')->delete($oldFile);
             }
         }
     }
@@ -107,7 +112,7 @@ trait ManagesPageItems
     private function storeFiles(array $files, array $content)
     {
         foreach ($files as $file) {
-            $path = $file->store('public');
+            $path = str_replace('public/', '', $file->store('public'));
             $content[$path] = $file->getClientOriginalName();
         }
 

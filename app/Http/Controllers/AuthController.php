@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\RefreshTokens;
 use Illuminate\Http\JsonResponse;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class AuthController extends Controller
 {
+    use RefreshTokens;
+
     /**
      * Get a JWT via given credentials.
      *
@@ -18,7 +22,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -55,10 +59,8 @@ class AuthController extends Controller
     {
         try {
             return $this->respondWithToken(auth()->refresh());
-        } catch (TokenBlacklistedException $e) {
-            return response()->json(['message' => 'Token blacklisted'], 401);
-        } catch (TokenExpiredException $e) {
-            return response()->json(['message' => 'Token expired'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
     }
 
@@ -73,10 +75,11 @@ class AuthController extends Controller
     {
         return response()
             ->json([
-                'access_token' => $token,
-                'token_type'   => 'bearer',
-                'expires_in'   => auth()->factory()->getTTL() * 60
+                'access_token'  => $token,
+                'token_type'    => 'bearer',
+                'expires_in'    => auth()->factory()->getTTL() * 60
             ])
+            ->cookie('refresh_token', $this->generateRefreshToken($token), $this->getRefreshTokenTTL())
             ->header('Authorization', "Bearer {$token}");
     }
 }

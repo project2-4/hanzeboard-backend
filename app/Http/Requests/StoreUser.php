@@ -31,10 +31,23 @@ class StoreUser extends FormRequest
 
         if (request()->method() !== 'POST') {
             $rules['email'][] = Rule::unique('users', 'id')->ignore(Auth::user()->id);
-        } else {
-            $rules['password'] = 'required|confirmed|min:8|max:191';
         }
 
         return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public static function translations(): array
+    {
+        return [
+            'first_name' => __('validation.attributes.first_name'),
+            'infix' => __('validation.attributes.infix'),
+            'email' => __('validation.attributes.email'),
+            'last_name' => __('validation.attributes.last_name'),
+            'avatar_url' => __('validation.attributes.avatar_url'),
+            'role_id' => __('validation.attributes.role')
+        ];
     }
 }

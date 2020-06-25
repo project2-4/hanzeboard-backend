@@ -27,7 +27,11 @@ class GradeController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->response($this->repository->all(), 200);
+        if (Auth::user()->profile_type === 'staff') {
+            return $this->response([], 200);
+        }
+
+        return $this->response(Auth::user()->profile->grades->load(['recorder.user', 'assignment.subject']), 200);
     }
 
     /**

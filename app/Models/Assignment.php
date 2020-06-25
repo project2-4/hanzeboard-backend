@@ -20,6 +20,16 @@ class Assignment extends Model
     ];
 
     /**
+     * @var string[]
+     */
+    protected $hidden = ['grades'];
+
+    /**
+     * @var string[]
+     */
+    protected $appends = ['avg_grade', 'passed', 'total_submissions', 'grade_overview', 'deadline_formatted'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function grades(): HasMany
@@ -28,10 +38,69 @@ class Assignment extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function submissions(): HasMany
+    {
+        return $this->hasMany(Submission::class, 'assignment_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class, 'subject_id');
+    }
+
+    /**
+     * @return float
+     */
+    public function getAvgGradeAttribute(): float
+    {
+        return $this->grades->avg('grade') ?? 0.0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPassedAttribute(): int
+    {
+        return $this->grades->filter(function ($value) {
+            return $value['grade'] >= 5.5;
+        })->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalSubmissionsAttribute(): int
+    {
+        return $this->grades->count();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeadlineFormattedAttribute(): string
+    {
+        return $this->deadline->format('d-m-Y');
+    }
+
+    /**
+     * @return array
+     */
+    public function getGradeOverviewAttribute(): array
+    {
+        $overview = [];
+        for ($i = 0; $i < 10; $i++) {
+            $overview[$i] = 0;
+        }
+
+        $this->grades->each(function ($item) use(&$overview) {
+            $overview[floor($item['grade']) - 1]++;
+        });
+
+        return $overview;
     }
 }

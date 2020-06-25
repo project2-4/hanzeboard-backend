@@ -22,9 +22,12 @@ Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::post('login', 'AuthController@login')->name('auth.login');
 
+        Route::post('refresh', 'AuthController@refresh')
+            ->middleware('auth.refresh')
+            ->name('auth.refresh');
+
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('logout', 'AuthController@logout')->name('auth.logout');
-            Route::post('refresh', 'AuthController@refresh')->name('auth.refresh');
             Route::post('me', 'AuthController@me')->name('auth.me');
         });
     });
@@ -38,52 +41,90 @@ Route::group(['middleware' => 'api'], function () {
 
         /** Courses */
         Route::get('courses/all', 'CourseController@all')->name('courses.all');
-        Route::apiResource('courses', 'CourseController');
+        Route::apiResource('courses', 'CourseController')
+            ->only(['index', 'show'])
+            ->middleware('courses.enrolled');
 
-        Route::group(['prefix' => 'courses/{course}'], function () {
+        Route::group(['prefix' => 'courses/{course}', 'middleware' => ['courses.enrolled']], function () {
             Route::get('students', 'CourseController@students')->name('courses.students');
             Route::get('staff', 'CourseController@staff')->name('courses.staff');
+            Route::delete('unenroll', 'CourseController@unenroll')->name('courses.unenroll');
 
             /** Announcements */
-            Route::apiResource('announcements', 'AnnouncementController');
+            Route::apiResource('announcements', 'AnnouncementController')->only(['index', 'show']);
 
             /** Pages */
-            Route::apiResource('pages', 'PageController');
+            Route::apiResource('pages', 'PageController')->only(['index', 'show']);
 
-            /** subjects */
-            Route::apiResource('subjects', 'SubjectController');
+            /** Subjects */
+            Route::apiResource('subjects', 'SubjectController')->only(['index', 'show']);
 
             Route::group(['prefix' => 'subjects/{subject}'], function () {
-
                 /** Assignments */
-                Route::apiResource('assignments', 'AssignmentController');
+                Route::apiResource('assignments', 'AssignmentController')->only(['index', 'show']);
+                /** Submissions */
+                Route::apiResource('assignments/{assignment}/submissions', 'SubmissionController')
+                    ->only(['store']);
+
+                Route::get('my-submission', 'SubmissionController@me');
             });
         });
 
         /** Roles */
         Route::apiResource('roles', 'RoleController');
 
-        /** Students */
-        Route::get('students/avatar', 'StudentController@getAvatar');
-        Route::apiResource('students', 'StudentController');
-        Route::post('students/avatar', 'StudentController@avatar');
-
         /** Grades */
-        Route::apiResource('grades', 'GradeController');
+        Route::apiResource('grades', 'GradeController')->only(['index', 'show']);
 
         /** Groups */
         Route::get('groups/me', 'GroupController@me')->name('groups.me');
-        Route::apiResource('groups', 'GroupController');
+        Route::apiResource('groups', 'GroupController')->only(['index', 'show']);
 
         /** Staff */
         Route::get('staff/me', 'StaffController@me')->name('staff.me');
 
         /** Admin Authorized actions */
-        Route::group(['middleware' => ['auth.admin']], function () {
+        Route::group(['middleware' => ['auth.staff']], function () {
+            /** Courses */
+            Route::apiResource('courses', 'CourseController')
+                ->only(['store', 'update', 'destroy'])
+                ->middleware('courses.enrolled');
+
+            Route::group(['prefix' => 'courses/{course}', 'middleware' => ['courses.enrolled']], function () {
+                /** Announcements */
+                Route::apiResource('announcements', 'AnnouncementController')->only(['store', 'update', 'destroy']);
+
+                /** Pages */
+                Route::apiResource('pages', 'PageController')->only(['store', 'update', 'destroy']);
+
+                /** Subjects */
+                Route::apiResource('subjects', 'SubjectController')->only(['store', 'update', 'destroy']);
+
+                Route::group(['prefix' => 'subjects/{subject}'], function () {
+                    /** Assignments */
+                    Route::apiResource('assignments', 'AssignmentController')->only(['store', 'update', 'destroy']);
+                    /** Submissions */
+                    Route::apiResource('assignments/{assignment}/submissions', 'SubmissionController')
+                        ->only(['index', 'destroy']);
+                });
+            });
+
+            /** Grades */
+            Route::apiResource('grades', 'GradeController')->only(['store', 'update', 'destroy']);
+
+            /** Groups */
+            Route::apiResource('groups', 'GroupController')->only(['store', 'update', 'destroy']);
+
             /** Staff */
             Route::apiResource('staff', 'StaffController');
-            Route::put('staff/{staff}/status', 'StaffStatusController@update');
+            Route::put('staff/{staff}/status', 'StaffStatusController@update')->name('staff.status');;
 
+            /** Students */
+            Route::apiResource('students', 'StudentController');
+            Route::post('students/avatar', 'StudentController@avatar');
+
+            /** Roles */
+            Route::apiResource('roles', 'RoleController');
         });
     });
 });
