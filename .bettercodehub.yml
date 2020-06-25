@@ -2,3 +2,7 @@ exclude:
 - /vendor/.*
 - /config/.*
 - /routes/.*
+- /resources/.*
+- /database/.*
+- /storage/.*
+- /bootstrap/.*
