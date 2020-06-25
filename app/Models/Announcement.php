@@ -29,4 +29,12 @@ class Announcement extends Model
     {
         return $this->belongsTo(Staff::class, 'posted_by');
     }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAtFormattedAttribute(): string
+    {
+        return $this->created_at->format('Y-m-d H:i:s');
+    }
 }
