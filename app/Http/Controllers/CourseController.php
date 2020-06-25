@@ -92,6 +92,13 @@ class CourseController extends Controller
         return $this->response(compact('success'), $this->getStatusCode($success));
     }
 
+    public function unenroll(Course $course): JsonResponse
+    {
+        $success = Auth::user()->courses()->detach($course->id) === 1;
+
+        return $this->response(compact('success'), $this->getStatusCode($success));
+    }
+
     /**
      * @param  \App\Models\Course  $course
      *

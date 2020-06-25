@@ -31,8 +31,6 @@ class StoreUser extends FormRequest
 
         if (request()->method() !== 'POST') {
             $rules['email'][] = Rule::unique('users', 'id')->ignore(Auth::user()->id);
-        } else {
-            $rules['password'] = 'required|confirmed|min:8|max:191';
         }
 
         return $rules;
