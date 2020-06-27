@@ -176,6 +176,7 @@ return [
         'email' => 'email',
         'last_name' => 'achternaam',
         'avatar_url' => 'profielafdeeling',
-        'role_id' => 'rol'
+        'role_id' => 'rol',
+        'deadline' => 'deadline'
     ]
 ];
