@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\OrderByScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -15,6 +16,14 @@ class Announcement extends Model
     protected $casts = [
         'created_at' => 'date:Y-m-d H:i:s',
     ];
+
+    /**
+     * @return \App\Scopes\OrderByScope
+     */
+    public static function getOrderByScope(): OrderByScope
+    {
+        return new OrderByScope('created_at', 'DESC');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
