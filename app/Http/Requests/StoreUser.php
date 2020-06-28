@@ -30,7 +30,9 @@ class StoreUser extends FormRequest
         ];
 
         if (request()->getMethod() !== 'POST') {
-            $rules['email'][] = Rule::unique('users', 'id')->ignore(Auth::user()->id);
+            $rules['email'][] = Rule::unique('users', 'email')->ignore(Auth::user()->id);
+        } else {
+            $rules['email'][] = Rule::unique('users', 'email');
         }
 
         return $rules;
