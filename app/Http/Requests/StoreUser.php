@@ -28,9 +28,14 @@ class StoreUser extends FormRequest
             'avatar_url' => 'nullable|string|min:2|max:191',
             'role_id' => 'required|exists:roles,id'
         ];
-
         if (request()->getMethod() !== 'POST') {
-            $rules['email'][] = Rule::unique('users', 'email')->ignore(Auth::user()->id);
+            $profile = request()->route('staff');
+
+            if (is_null($profile)) {
+                $profile = request()->route('student');
+            }
+
+            $rules['email'][] = Rule::unique('users', 'email')->ignore($profile->user->id);
         } else {
             $rules['email'][] = Rule::unique('users', 'email');
         }
