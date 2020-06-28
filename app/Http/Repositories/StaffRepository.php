@@ -10,6 +10,7 @@ use App\Traits\CreatesUsers;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StudentsRepository
@@ -43,7 +44,9 @@ class StaffRepository extends Repository
      */
     public function all(): Collection
     {
-        return $this->getModel()->with('user')->get();
+        return $this->getModel()->with('user')
+            ->where('id', '!=', Auth::user()->profile_id)
+            ->get();
     }
 
     /**
