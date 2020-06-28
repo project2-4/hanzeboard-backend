@@ -25,7 +25,7 @@ class StoreAssignment extends FormRequest
             'deadline' => 'required|date|date_format:Y-m-d'
         ];
 
-        if ($this->method === 'POST') {
+        if (request()->getMethod() === 'POST') {
             $rules['deadline'] .= '|after:now';
         }
 

@@ -29,7 +29,7 @@ class StoreUser extends FormRequest
             'role_id' => 'required|exists:roles,id'
         ];
 
-        if (request()->method() !== 'POST') {
+        if (request()->getMethod() !== 'POST') {
             $rules['email'][] = Rule::unique('users', 'id')->ignore(Auth::user()->id);
         }
 

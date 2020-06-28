@@ -13,7 +13,7 @@ return [
     */
     'accepted'        => ':Attribute moet geaccepteerd zijn.',
     'active_url'      => ':Attribute is geen geldige URL.',
-    'after'           => ':Attribute moet een datum na :date zijn.',
+    'after'           => ':Attribute moet een datum na vandaag zijn.',
     'after_or_equal'  => ':Attribute moet een datum na of gelijk aan :date zijn.',
     'alpha'           => ':Attribute mag alleen letters bevatten.',
     'alpha_dash'      => ':Attribute mag alleen letters, nummers, underscores (_) en streepjes (-) bevatten.',

@@ -20,7 +20,7 @@ class StoreStaffStatus extends FormRequest
     {
         return [
             'status' => 'required|in:available,leave,sick',
-            'until' => 'required|date|date_format:Y-m-d'
+            'until' => 'required|date|date_format:Y-m-d|after:now'
         ];
     }
 
