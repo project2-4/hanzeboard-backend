@@ -14,5 +14,5 @@ return [
     | Url in mail
     |--------------------------------------------------------------------------
     */
-    'url' => 'http://localhost:5000/courses/{course}/announcements'
+    'url' => 'https://dev.learnandbelieve.nl/courses/{course}/announcements'
 ];
