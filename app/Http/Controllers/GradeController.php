@@ -50,7 +50,7 @@ class GradeController extends Controller
 
         foreach ($grades as $grade) {
             try {
-                $student = Student::where('student_number', '=', $grade[0]);
+                $student = Student::where('student_number', '=', $grade[0])->first();
                 $grade = (float) $grade[1];
 
                 $savedGrades[] = $this->repository->newGrade($student, $assignment, $assigner, $grade);

@@ -10,6 +10,7 @@ use App\Traits\CreatesUsers;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StudentsRepository
@@ -39,11 +40,19 @@ class StaffRepository extends Repository
     }
 
     /**
+     * @param  bool  $exclude
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all(): Collection
+    public function all($exclude = true): Collection
     {
-        return $this->getModel()->with('user')->get();
+        $builder = $this->getModel()->with('user');
+
+        if ($exclude) {
+            $builder->where('id', '!=', Auth::user()->profile_id);
+        }
+
+        return $builder->get();
     }
 
     /**

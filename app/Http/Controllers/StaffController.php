@@ -29,6 +29,14 @@ class StaffController extends Controller
     }
 
     /**
+     * @return JsonResponse
+     */
+    public function all(): JsonResponse
+    {
+        return $this->response($this->repository->all(false)->load(['user', 'status']), 200);
+    }
+
+    /**
      * @param  \App\Models\Staff  $staff
      *
      * @return \Illuminate\Http\JsonResponse

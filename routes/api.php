@@ -118,6 +118,7 @@ Route::group(['middleware' => 'api'], function () {
             Route::apiResource('groups', 'GroupController')->only(['store', 'update', 'destroy']);
 
             /** Staff */
+            Route::get('staff/all', 'StaffController@all');
             Route::apiResource('staff', 'StaffController');
             Route::put('staff/{staff}/status', 'StaffStatusController@update')->name('staff.status');;
 

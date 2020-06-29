@@ -181,7 +181,8 @@ return [
         'email' => 'email',
         'last_name' => 'last name',
         'avatar_url' => 'profile picture',
-        'role' => 'role'
+        'role' => 'role',
+        'deadline' => 'deadline'
     ]
 
 ];

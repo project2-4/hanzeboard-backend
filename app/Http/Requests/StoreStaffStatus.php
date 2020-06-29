@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\RequiredIf;
 
 /**
  * Class StoreUser
@@ -20,7 +21,12 @@ class StoreStaffStatus extends FormRequest
     {
         return [
             'status' => 'required|in:available,leave,sick',
-            'until' => 'required|date|date_format:Y-m-d'
+            'until'  => [
+                new RequiredIf(in_array(request()->get('status'), ['leave', 'sick'])),
+                'date',
+                'date_format:Y-m-d',
+                'after:now',
+            ]
         ];
     }
 
