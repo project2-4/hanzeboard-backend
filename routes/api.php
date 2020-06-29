@@ -83,6 +83,8 @@ Route::group(['middleware' => 'api'], function () {
         /** Staff */
         Route::get('staff/me', 'StaffController@me')->name('staff.me');
 
+        Route::post('students/avatar', 'StudentController@avatar');
+        
         /** Admin Authorized actions */
         Route::group(['middleware' => ['auth.staff']], function () {
             /** Courses */
@@ -121,7 +123,6 @@ Route::group(['middleware' => 'api'], function () {
 
             /** Students */
             Route::apiResource('students', 'StudentController');
-            Route::post('students/avatar', 'StudentController@avatar');
 
             /** Roles */
             Route::apiResource('roles', 'RoleController');
