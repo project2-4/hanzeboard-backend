@@ -40,13 +40,19 @@ class StaffRepository extends Repository
     }
 
     /**
+     * @param  bool  $exclude
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all(): Collection
+    public function all($exclude = true): Collection
     {
-        return $this->getModel()->with('user')
-            ->where('id', '!=', Auth::user()->profile_id)
-            ->get();
+        $builder = $this->getModel()->with('user');
+
+        if ($exclude) {
+            $builder->where('id', '!=', Auth::user()->profile_id);
+        }
+
+        return $builder->get();
     }
 
     /**
